@@ -2,182 +2,201 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#ifndef GL_MULTISAMPLE
+#define GL_MULTISAMPLE  0x809D
+#endif
 constexpr double M_PI = 3.14159265358979323846;
 
-void drawCircle(GLfloat x, GLfloat y, GLfloat radius, GLint numberOfSides, bool filled) {
-    GLint numberOfVertices = numberOfSides + 2;
-    GLfloat doublePi = 2.0f * M_PI;
+// 角度变量，用于旋转视角
+GLfloat theta[] = { 20.0, 128.0, 0.0 };  // X, Y, Z 轴的旋转角度
+int lastX = 0, lastY = 0;  // 上一次鼠标位置
 
-    std::vector<GLfloat> circleVerticesX(numberOfVertices);
-    std::vector<GLfloat> circleVerticesY(numberOfVertices);
-    std::vector<GLfloat> circleVerticesZ(numberOfVertices);
+bool isDragging = false;  // 是否正在拖拽
 
-    circleVerticesX[0] = x;
-    circleVerticesY[0] = y;
-    circleVerticesZ[0] = 0;
+float CusScale = 1.0f;
+float radius = 900.0f * CusScale;  // 距离视点的半径
+float CubeSize = 100.0f * CusScale;
+float GroundSize = 500.0f * CusScale;
 
-    for (int i = 1; i < numberOfVertices; i++) {
-        circleVerticesX[i] = x + (radius * cos(i * doublePi / numberOfSides));
-        circleVerticesY[i] = y + (radius * sin(i * doublePi / numberOfSides));
-        circleVerticesZ[i] = 0;
-    }
-
-    std::vector<GLfloat> allCircleVertices(numberOfVertices * 3);
-
-    for (int i = 0; i < numberOfVertices; i++) {
-        allCircleVertices[i * 3] = circleVerticesX[i];
-        allCircleVertices[(i * 3) + 1] = circleVerticesY[i];
-        allCircleVertices[(i * 3) + 2] = circleVerticesZ[i];
-    }
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, allCircleVertices.data());
-    if (filled) {
-        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices);
-    }
-    else {
-        glDrawArrays(GL_LINE_LOOP, 1, numberOfVertices - 1);
-    }
-    glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-void draw4SquareGrid(GLfloat x, GLfloat y, GLfloat halfLength) {
-    GLfloat points[9][2] = { {x - halfLength, y + halfLength}, {x, y + halfLength}, {x + halfLength, y + halfLength},
-                             {x - halfLength, y}, {x, y}, {x + halfLength, y},
-                             {x - halfLength, y - halfLength}, {x, y - halfLength}, {x + halfLength, y - halfLength} };
-    glBegin(GL_LINES);
-
-    glVertex2fv(points[0]);
-    glVertex2fv(points[2]);
-    glVertex2fv(points[3]);
-    glVertex2fv(points[5]);
-    glVertex2fv(points[6]);
-    glVertex2fv(points[8]);
-
-    glVertex2fv(points[0]);
-    glVertex2fv(points[6]);
-    glVertex2fv(points[1]);
-    glVertex2fv(points[7]);
-    glVertex2fv(points[2]);
-    glVertex2fv(points[8]);
+void drawGround() {
+    glBegin(GL_QUADS);
+    glColor3f(0.0f, 1.0f, 0.0f);  // Green color
+    glVertex3f(-GroundSize / 2, -1.0f, -GroundSize / 2);  // Bottom-left
+    glVertex3f(GroundSize / 2, -1.0f, -GroundSize / 2);   // Bottom-right
+    glVertex3f(GroundSize / 2, -1.0f, GroundSize / 2);    // Top-right
+    glVertex3f(-GroundSize / 2, -1.0f, GroundSize / 2);   // Top-left
     glEnd();
 }
 
-void drawRailings(GLfloat startX, GLfloat startY, GLfloat endX, GLfloat endY, GLfloat height, GLint railingsnum) {
-    if (startY != endY) {
-        std::cerr << "Error: The railing is not horizontal. The y-coordinates of the start and end points must be the same." << std::endl;
-        return;
-    }
+void drawBody() {
+    glColor3f(1.0f, 1.0f, 1.0f);  // White color for the cube
+    glutSolidCube(CubeSize);  // Draw a cube
 
-    GLfloat halfRailingHeight = height / 2.0f;
-    GLfloat railingWidth = (endX - startX) / railingsnum;
+    glPushMatrix();  // Save the current transformation matrix
 
-    glBegin(GL_LINES);
-    for (int i = 0; i <= railingsnum; ++i) {
-        GLfloat x = startX + i * railingWidth;
-        glVertex2f(x, startY - halfRailingHeight);
-        glVertex2f(x, startY + halfRailingHeight);
-    }
-    glVertex2f(startX, startY);
-    glVertex2f(endX, endY);
+    glColor3f(0.7f, 0.7f, 0.7f);  // Light gray color
+    glTranslatef(-CubeSize / 2 / 2, 0.0f, CubeSize / 2 + 0.01 * CubeSize);
+    glBegin(GL_QUADS);
+    glVertex3f(-CubeSize / 2 / 2 * 0.6, -CubeSize / 2 / 2 * 0.6, 0.0f); //Bottom-left
+    glVertex3f(CubeSize / 2 / 2 * 0.6, -CubeSize / 2 / 2 * 0.6, 0.0f);  //Bottom-right
+    glVertex3f(CubeSize / 2 / 2 * 0.6, CubeSize / 2 / 2 * 0.6, 0.0f);   //Top-right
+    glVertex3f(-CubeSize / 2 / 2 * 0.6, CubeSize / 2 / 2 * 0.6, 0.0f);  //Top-left
     glEnd();
+
+    glTranslatef(CubeSize / 2, 0.0f, 0.0f);
+    glBegin(GL_QUADS);
+    glVertex3f(-CubeSize / 2 / 2 * 0.6, -CubeSize / 2, 0.0f);
+    glVertex3f(CubeSize / 2 / 2 * 0.6, -CubeSize / 2, 0.0f);
+    glVertex3f(CubeSize / 2 / 2 * 0.6, CubeSize / 2 / 2 * 0.6, 0.0f);
+    glVertex3f(-CubeSize / 2 / 2 * 0.6, CubeSize / 2 / 2 * 0.6, 0.0f);
+    glEnd();
+
+    glPopMatrix();  // Restore the previous transformation matrix
+}
+
+void setupCamera() {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    float camX = radius * cos(theta[1] * M_PI / 180.0f) * cos(theta[0] * M_PI / 180.0f);
+    float camY = radius * sin(theta[0] * M_PI / 180.0f);
+    float camZ = radius * sin(theta[1] * M_PI / 180.0f) * cos(theta[0] * M_PI / 180.0f);
+    gluLookAt(camX, camY, camZ, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    
+}
+
+void setupLighting() {
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    // Set the light source properties (white light coming from above)
+    GLfloat light_position[] = { 1.0f, 1.0f, 1.0f, 0.0f };  // Directional light
+    GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };   // 白色散射光
+    GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };  // White light specular reflection 镜面反射光
+    GLfloat light_ambient[] = { 0.3f, 0.3f, 0.3f, 1.0f };   // Ambient light 环境光
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+
+    // 启用材质颜色与光源颜色的混合
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+    // 设置材质反射系数 Set the material reflectance coefficients
+    GLfloat mat_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };  // 白色的散射光
+    GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f }; // 强镜面反射光
+    GLfloat mat_shininess[] = { 100.0f };  // 高光强度
+
+    // 设置物体的材质反射 Set the material reflectance of the object
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);    // 设置散射反射光
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);  // 设置镜面反射光
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); // 设置高光强度
 }
 
 void display() {
-    glClearColor(0.0, 1.0, 1.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clear the screen and depth buffer
 
-    glColor3f(0.0, 0.0, 0.0); // Black
-    GLfloat house_chimney[4][2] = { {0.2,0.7}, {0.4,0.7}, {0.4,0.21}, {0.2,0.21} };
-    glBegin(GL_POLYGON);
-    glVertex2fv(house_chimney[0]);
-    glVertex2fv(house_chimney[1]);
-    glVertex2fv(house_chimney[2]);
-    glVertex2fv(house_chimney[3]);
-    glEnd();
+    setupCamera(); // Set the camera view
 
-    glColor3f(1.0, 0.0, 0.0); // Red
-    GLfloat house_roof[3][2] = { {0.0,0.8}, {0.5,0.2}, {-0.5,0.2} };
-    glBegin(GL_TRIANGLES);
-    glVertex2fv(house_roof[0]);
-    glVertex2fv(house_roof[1]);
-    glVertex2fv(house_roof[2]);
-    glEnd();
+    drawGround(); // Draw the ground
 
-    glColor3f(1.0, 1.0, 1.0); // White
-    GLfloat house_body[4][2] = { {0.5,0.2}, {0.5,-0.7}, {-0.5,-0.7}, {-0.5,0.2} };
-    glBegin(GL_POLYGON);
-    glVertex2fv(house_body[0]);
-    glVertex2fv(house_body[1]);
-    glVertex2fv(house_body[2]);
-    glVertex2fv(house_body[3]);
-    glEnd();
+    // Draw the cube at the center of the scene
+    glPushMatrix();  // Save the current transformation matrix
+    glTranslatef(0.0f, CubeSize / 2, 0.0f);  // Move the cube above the ground
+    drawBody();
+    glPopMatrix();  // Restore the previous transformation matrix
 
-    glColor3f(0.0, 0.0, 0.0); // Black
-    glLineWidth(2.0f);
-    GLfloat chimney_line[2][2] = { {0.45,0.7}, {0.7,0.9} };
-    glBegin(GL_LINES);
-    glVertex2fv(chimney_line[0]);
-    glVertex2fv(chimney_line[1]);
-    glEnd();
+    glFlush();  // Ensure all OpenGL commands are executed
+    glutSwapBuffers();  // Swap the buffer to display the rendered image
 
-    drawCircle(0.4, 0.7, 0.05, 100, false);
-    drawCircle(0.5, 0.8, 0.06, 100, false);
-    drawCircle(0.6, 0.9, 0.07, 100, false);
-
-    draw4SquareGrid(-0.25, -0.125, 0.125);
-
-    GLfloat door[4][2] = { {0.125,-0.7}, {0.125,0.0}, {0.375,0.0}, {0.375,-0.7} };
-    glBegin(GL_LINES);
-    glVertex2fv(door[0]);
-    glVertex2fv(door[1]);
-    glVertex2fv(door[1]);
-    glVertex2fv(door[2]);
-    glVertex2fv(door[2]);
-    glVertex2fv(door[3]);
-    glEnd();
-
-    GLfloat doorknob[4][2] = { {0.15,-0.35}, {0.15,-0.4}, {0.2,-0.4}, {0.2,-0.35} };
-    glBegin(GL_POLYGON);
-    glVertex2fv(doorknob[0]);
-    glVertex2fv(doorknob[1]);
-    glVertex2fv(doorknob[2]);
-    glVertex2fv(doorknob[3]);
-    glEnd();
-
-    glColor3f(0.66, 0.41, 0.16);
-    glLineWidth(5.0f);
-    drawRailings(-0.9, -0.7, 0.9, -0.7, 0.3, 20);
-
-    glFlush();
+    // 输出当前的角度
+    std::cout << "Current angles: ";
+    std::cout << "X: " << theta[0] << ", Y: " << theta[1] << ", Z: " << theta[2] << std::endl;
 }
 
-void reshape(GLsizei width, GLsizei height) {
-    if (height == 0) height = 1;
-    GLfloat aspect = (GLfloat)width / (GLfloat)height;
+void init() {
+    glClearColor(0.53f, 0.81f, 0.92f, 1.0f);  // Sky blue background color
+    glEnable(GL_DEPTH_TEST);  // Enable depth testing for 3D rendering
 
-    glViewport(0, 0, width, height);
+    glEnable(GL_MULTISAMPLE);  // Enable anti-aliasing
+    glShadeModel(GL_SMOOTH);  // Enable smooth shading
 
+    // Set up the projection matrix for 3D rendering
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    gluPerspective(45.0, 1.0, 0.1, 10000.0);  // near=0.1，far=10000，避免裁剪 Field of view, aspect ratio, near and far planes
+    glMatrixMode(GL_MODELVIEW);
+    // Set up lighting
+    setupLighting();
+}
 
-    if (width >= height) {
-        gluOrtho2D(-1.0 * aspect, 1.0 * aspect, -1.0, 1.0);
+// 鼠标点击事件 Mouse click event
+void mouseFunc(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        lastX = x;
+        lastY = y;
+        isDragging = true;  // 开始拖拽
     }
     else {
-        gluOrtho2D(-1.0, 1.0, -1.0 / aspect, 1.0 / aspect);
+        isDragging = false;  // 停止拖拽
+    }
+}
+
+// 鼠标拖动事件 Mouse drag event
+void motionFunc(int x, int y) {
+    if (isDragging) {
+        int deltaX = x - lastX;
+        int deltaY = y - lastY;
+
+        theta[0] += deltaY * 0.1f;
+        theta[1] += deltaX * 0.1f;
+
+        if (theta[0] > 89.0f) theta[0] = 89.0f;
+        if (theta[0] < -89.0f) theta[0] = -89.0f;
+        lastX = x;
+        lastY = y;
+        glutPostRedisplay();
+    }
+}
+
+// 键盘事件 Keyboard event
+void keyboardFunc(unsigned char key, int x, int y) {
+    if (key == 27) {  //  `ESC` 退出
+        exit(0);
     }
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    // 使用箭头键来控制缩放 Use the arrow keys to control the zoom
+    if (key == '+') {  // +：缩小视距 Plus: zoom in
+        radius *= 0.9f;
+    }
+    if (key == '-') {  // -：放大视距 Minus: zoom out
+        radius *= 1.1f;
+    }
+    // 限制radius的范围 Limit the range of radius
+    if (radius < 100.0f) radius = 100.0f;
+    if (radius > 2000.0f) radius = 2000.0f;
+
+    glutPostRedisplay();  // 重新绘制场景 Redraw the scene
+    std::cout << "Key " << key << " was pressed!" << std::endl;
 }
+
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(300, 300);
-    glutCreateWindow("House");
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);  // Double buffering and depth buffering
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("3D Scene");
+
+    init();
+
+    glutMouseFunc(mouseFunc);  // 鼠标点击回调 Mouse click callback
+    glutMotionFunc(motionFunc);  // 鼠标拖动回调 Mouse drag callback
+    glutKeyboardFunc(keyboardFunc);  // 键盘事件回调 Keyboard event callback
+
     glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutMainLoop();
+    glutMainLoop();  // Enter the GLUT main loop
+
+    return 0;
 }
