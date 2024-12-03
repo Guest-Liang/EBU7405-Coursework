@@ -2,7 +2,7 @@
 /// @file glm/gtx/matrix_cross_product.hpp
 ///
 /// @see core (dependence)
-/// @see gtx_extended_min_max (dependence)
+/// @see gtx_extented_min_max (dependence)
 ///
 /// @defgroup gtx_matrix_cross_product GLM_GTX_matrix_cross_product
 /// @ingroup gtx
@@ -18,9 +18,7 @@
 
 #ifndef GLM_ENABLE_EXPERIMENTAL
 #	error "GLM: GLM_GTX_matrix_cross_product is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
-#endif
-
-#if GLM_MESSAGES == GLM_ENABLE && !defined(GLM_EXT_INCLUDED)
+#elif GLM_MESSAGES == GLM_ENABLE && !defined(GLM_EXT_INCLUDED)
 #	pragma message("GLM: GLM_GTX_matrix_cross_product extension included")
 #endif
 

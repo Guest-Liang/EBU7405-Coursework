@@ -12,7 +12,6 @@ cw/src/stb_image.cpp
 cw/includes/assimp
 cw/includes/freetype
 cw/includes/irrKlang
-cw/includes/KHR
 cw/includes/*.h
 cw/includes/*.c
 

@@ -6,6 +6,13 @@
 #include "../gtc/matrix_access.hpp" // glm::col, glm::row
 #include "../gtx/type_trait.hpp"    // glm::type<>
 
+#if GLM_COMPILER & GLM_COMPILER_CLANG
+#	pragma clang diagnostic push
+#	pragma clang diagnostic ignored "-Wpadded"
+#	pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#	pragma clang diagnostic ignored "-Wglobal-constructors"
+#endif
+
 namespace glm{
 namespace io
 {
@@ -80,7 +87,7 @@ namespace io
 	{}
 
 	template<typename CTy>
-	GLM_FUNC_QUALIFIER delimiter<CTy>::delimiter(CTy a, CTy b, CTy c)
+	GLM_FUNC_QUALIFIER delimeter<CTy>::delimeter(CTy a, CTy b, CTy c)
 		: value()
 	{
 		value[0] = a;
@@ -130,7 +137,7 @@ namespace io
 	}
 
 	template<typename CTy, typename CTr>
-	GLM_FUNC_QUALIFIER  std::basic_ostream<CTy, CTr>& operator<<(std::basic_ostream<CTy, CTr>& os, delimiter<CTy> const& a)
+	GLM_FUNC_QUALIFIER  std::basic_ostream<CTy, CTr>& operator<<(std::basic_ostream<CTy, CTr>& os, delimeter<CTy> const& a)
 	{
 		format_punct<CTy> & fmt(const_cast<format_punct<CTy>&>(get_facet<format_punct<CTy> >(os)));
 
@@ -167,11 +174,11 @@ namespace detail
 			{
 				io::basic_state_saver<CTy> const bss(os);
 
-				os << std::fixed << std::right << std::setprecision(fmt.precision) << std::setfill(fmt.space) << fmt.delim_left;
+				os << std::fixed << std::right << std::setprecision(static_cast<std::streamsize>(fmt.precision)) << std::setfill(fmt.space) << fmt.delim_left;
 
 				for(length_t i(0); i < components; ++i)
 				{
-					os << std::setw(fmt.width) << a[i];
+					os << std::setw(static_cast<int>(fmt.width)) << a[i];
 					if(components-1 != i)
 						os << fmt.separator;
 				}
@@ -438,3 +445,8 @@ namespace detail
 		return detail::print_matrix_pair_on(os, a);
 	}
 }//namespace glm
+
+#if GLM_COMPILER & GLM_COMPILER_CLANG
+#	pragma clang diagnostic pop
+#endif
+

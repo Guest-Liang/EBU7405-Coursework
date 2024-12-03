@@ -103,7 +103,7 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_sign(glm_vec4 x)
 	glm_vec4 const cmp1 = _mm_cmpgt_ps(x, zro0);
 	glm_vec4 const and0 = _mm_and_ps(cmp0, _mm_set1_ps(-1.0f));
 	glm_vec4 const and1 = _mm_and_ps(cmp1, _mm_set1_ps(1.0f));
-	glm_vec4 const or0 = _mm_or_ps(and0, and1);;
+	glm_vec4 const or0 = _mm_or_ps(and0, and1);
 	return or0;
 }
 
@@ -206,7 +206,7 @@ GLM_FUNC_QUALIFIER glm_vec4 glm_vec4_smoothstep(glm_vec4 edge0, glm_vec4 edge1, 
 {
 	glm_vec4 const sub0 = glm_vec4_sub(x, edge0);
 	glm_vec4 const sub1 = glm_vec4_sub(edge1, edge0);
-	glm_vec4 const div0 = glm_vec4_sub(sub0, sub1);
+	glm_vec4 const div0 = glm_vec4_div(sub0, sub1);
 	glm_vec4 const clp0 = glm_vec4_clamp(div0, _mm_setzero_ps(), _mm_set1_ps(1.0f));
 	glm_vec4 const mul0 = glm_vec4_mul(_mm_set1_ps(2.0f), clp0);
 	glm_vec4 const sub2 = glm_vec4_sub(_mm_set1_ps(3.0f), mul0);

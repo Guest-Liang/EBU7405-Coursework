@@ -20,7 +20,7 @@
 #undef isinf
 #endif
 
-//! Workaround for Chrome Native Client
+//! Workaround for Chrone Native Client
 #ifdef log2
 #undef log2
 #endif
