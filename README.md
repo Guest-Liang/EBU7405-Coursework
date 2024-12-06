@@ -1,6 +1,9 @@
 # EBU7405-Coursework
 `cw/includes`、`cw/src`、`cw/lib`均来自GitHub Repo: [LearnOpenGL](https://github.com/JoeyDeVries/LearnOpenGL)
 
+# 仅在windows下使用Visual Studio 2022 Community编译通过，其他平台因为无设备，无法测试
+# 推荐使用Visual Studio 2022 Community打开sln文件
+
 ### GLFW up 3.3 to 3.4
 [GitHub Release](https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip)   
 ```text
