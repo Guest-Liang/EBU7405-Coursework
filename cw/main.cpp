@@ -9,6 +9,8 @@
 
 #include <cmath>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE 0x809D
@@ -18,28 +20,82 @@ constexpr double M_PI = 3.14159265358979323846;
 const unsigned int SCR_WIDTH = 960;
 const unsigned int SCR_HEIGHT = 720;
 
-float angle = 0.0f;
 float fov = 45.0f;
-float theta[] = { 18.0, 36.0, 0.0 };  // X, Y, Z 轴的旋转角度
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
 bool isDragging = false; // 记录是否正在拖拽
 bool isFreeMoveMode = true;  // 切换摄像机模式
-bool firstMouse = true;  // 记录是否是第一次移动鼠标
+bool firstMouse = true;  // 是否是第一次移动鼠标
 bool keys[GLFW_KEY_LAST + 1] = { false }; // 记录所有按键的状态
 
 int lastX = 0, lastY = 0;  // 上一次鼠标位置
 
-float radius = 3.0f;  // 摄像机到固定视角模式的中心的距离
+float radius = 4.0f;  // 摄像机到固定模式的中心的距离
 glm::vec3 camPos = glm::vec3(-2.0f, 1.0f, 2.0f); // 存储摄像机的位置（x, y, z）
 glm::vec3 camFront = glm::normalize(glm::vec3(1.0f, -0.5f, -1.0f)); // 摄像机的前方向
 glm::vec3 camUp = glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f)); // 摄像机的上方向
-float pitch = glm::degrees(std::asin(camFront.y)); // pitch是前方向y分量的反正弦值
-float yaw = glm::degrees(std::atan2(-camFront.x, -camFront.z)); // yaw是x,z平面的反正切值
+float freeModePitch = glm::degrees(std::asin(camFront.y)); // freeModePitch 前方向y分量的反正弦值
+float freeModeYaw = glm::degrees(std::atan2(-camFront.x, -camFront.z)); // freeModeYaw x,z平面的反正切值
 
-glm::mat4 fixViewMatrix;  // 固定视角模式下的视图矩阵
+float fixedYaw = 135.0f;  // 固定模式下的水平旋转角度
+float fixedPitch = 18.0f;  // 固定模式下的垂直旋转角度
 
+glm::mat4 fixViewMatrix = glm::lookAt(
+    glm::vec3(radius*cos(glm::radians(fixedYaw))*cos(glm::radians(fixedPitch)),
+              radius*sin(glm::radians(fixedPitch)),
+              radius*sin(glm::radians(fixedYaw))*cos(glm::radians(fixedPitch))),
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    camUp);
+
+
+void LogInfo() {
+    const int width = 20; // 设置列宽
+
+    std::cout << std::fixed << std::setprecision(3); // 设置浮点数精度
+
+    std::cout << std::left << std::setw(width) << "Parameter"
+        << std::left << std::setw(width) << "Value" << std::endl; // 打印表头
+
+    std::cout << std::string(width * 2, '-') << std::endl;
+
+    // 打印各个参数及其值
+    std::cout << std::left << std::setw(width) << "FreeMoveMode"
+        << std::left << std::setw(width) << (isFreeMoveMode ? "Enabled" : "Disabled") << std::endl;
+
+    std::cout << std::left << std::setw(width) << "FreeMovePitch"
+        << std::left << std::setw(width) << freeModePitch << std::endl;
+
+    std::cout << std::left << std::setw(width) << "FreeMoveYaw"
+        << std::left << std::setw(width) << freeModeYaw << std::endl;
+
+    std::cout << std::left << std::setw(width) << "FixedPitch"
+        << std::left << std::setw(width) << fixedPitch << std::endl;
+
+    std::cout << std::left << std::setw(width) << "FixedYaw"
+        << std::left << std::setw(width) << fixedYaw << std::endl;
+
+    // 格式化 camPos
+    std::ostringstream camPosStr;
+    camPosStr << std::fixed << std::setprecision(3)
+        << "(" << camPos.x << ", " << camPos.y << ", " << camPos.z << ")";
+    std::cout << std::left << std::setw(width) << "camPos"
+        << std::left << std::setw(width) << camPosStr.str() << std::endl;
+
+    // 格式化 camFront
+    std::ostringstream camFrontStr;
+    camFrontStr << std::fixed << std::setprecision(3)
+        << "(" << camFront.x << ", " << camFront.y << ", " << camFront.z << ")";
+    std::cout << std::left << std::setw(width) << "camFront"
+        << std::left << std::setw(width) << camFrontStr.str() << std::endl;
+
+    // 格式化 camUp
+    std::ostringstream camUpStr;
+    camUpStr << std::fixed << std::setprecision(3)
+        << "(" << camUp.x << ", " << camUp.y << ", " << camUp.z << ")";
+    std::cout << std::left << std::setw(width) << "camUp"
+        << std::left << std::setw(width) << camUpStr.str() << std::endl;
+}
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
@@ -51,58 +107,58 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
     if (isDragging) {
-        if (isFreeMoveMode) {
-            float xpos = static_cast<float>(xposIn);
-            float ypos = static_cast<float>(yposIn);
+        float xpos = static_cast<float>(xposIn);
+        float ypos = static_cast<float>(yposIn);
 
-            if (firstMouse)
-            {
-                lastX = xpos;
-                lastY = ypos;
-                firstMouse = false;
-            }
-
-            float xoffset = xpos - lastX;
-            float yoffset = lastY - ypos;
+        if (firstMouse)
+        {
             lastX = xpos;
             lastY = ypos;
+            firstMouse = false;
+        }
 
-            float sensitivity = 0.1f; // change this value to your liking
-            xoffset *= sensitivity;
-            yoffset *= sensitivity;
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos;
+        lastX = xpos;
+        lastY = ypos;
 
-            yaw += xoffset;
-            pitch += yoffset;
+        float sensitivity = 0.1f; // change this value to your liking
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
+        if (isFreeMoveMode) {
+            freeModeYaw += xoffset;
+            freeModePitch += yoffset;
 
-            // 自由移动模式：鼠标拖动改变摄像机的朝向
-            theta[1] += xoffset;  // 改变水平旋转角度
-            theta[0] -= yoffset;  // 改变垂直旋转角度
-
-            // 限制俯仰角，防止翻转
-            if (theta[0] > 89.0f) theta[0] = 89.0f;
-            if (theta[0] < -89.0f) theta[0] = -89.0f;
-
-            if (pitch > 89.0f) pitch = 89.0f;
-            if (pitch < -89.0f) pitch = -89.0f;
+            if (freeModePitch > 89.0f) freeModePitch = 89.0f;
+            if (freeModePitch < -89.0f) freeModePitch = -89.0f;
 
             glm::vec3 front;
-            front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-            front.y = sin(glm::radians(pitch));
-            front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+            front.x = cos(glm::radians(freeModeYaw)) * cos(glm::radians(freeModePitch));
+            front.y = sin(glm::radians(freeModePitch));
+            front.z = sin(glm::radians(freeModeYaw)) * cos(glm::radians(freeModePitch));
             camFront = glm::normalize(front);
         }
         else {
+            // 更新固定模式下的Yaw和Pitch
+            fixedYaw += xoffset;
+            fixedPitch += -yoffset;
+
+            if (fixedPitch > 89.0f)
+                fixedPitch = 89.0f;
+            if (fixedPitch < -89.0f)
+                fixedPitch = -89.0f;
+
             // 旋转模式：基于球坐标来计算摄像机的位置
-            float camX = camPos.x + radius * cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-            float camY = camPos.y + radius * sin(glm::radians(pitch));
-            float camZ = camPos.z + radius * sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+            float camX = radius * cos(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch));
+            float camY = radius * sin(glm::radians(fixedPitch));
+            float camZ = radius * sin(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch));
 
             fixViewMatrix = glm::lookAt(glm::vec3(camX, camY, camZ), glm::vec3(0.0f, 0.0f, 0.0f), camUp);
         }
     }
     else {
-        lastX = SCR_WIDTH / 2;
-        lastY = SCR_HEIGHT / 2;
+        //lastX = SCR_WIDTH / 2;
+        //lastY = SCR_HEIGHT / 2;
         firstMouse = true;
     }
 }
@@ -134,16 +190,28 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
-    // 监听 M 键，切换自由移动模式和固定视角模式
+    // 监听 M 键，切换自由移动模式和固定模式
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS && !keys[GLFW_KEY_M]) {
         printKeyEvent(GLFW_KEY_M, "pressed");
         keys[GLFW_KEY_M] = true; // 标记 M 键按下
         isFreeMoveMode = !isFreeMoveMode; // 切换模式
         std::cout << "FreeMoveMode: " << (isFreeMoveMode ? "Enabled" : "Disabled") << std::endl;
+        firstMouse = true;
     }
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_RELEASE && keys[GLFW_KEY_M]) {
         printKeyEvent(GLFW_KEY_M, "released");
         keys[GLFW_KEY_M] = false; // 标记 M 键释放
+    }
+
+    // 监听 L 键，按一次就LogInfo
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS && !keys[GLFW_KEY_L]) {
+        printKeyEvent(GLFW_KEY_L, "pressed");
+        keys[GLFW_KEY_L] = true; // 标记 L 键按下
+        LogInfo();
+    }
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_RELEASE && keys[GLFW_KEY_L]) {
+        printKeyEvent(GLFW_KEY_L, "released");
+        keys[GLFW_KEY_L] = false; // 标记 L 键释放
     }
     
     float currentFrame = glfwGetTime();
@@ -275,7 +343,7 @@ int main() {
         // 绘制正方体
         DrawCube();
 
-        // 交换缓冲区并处理事件
+        // 交换缓冲区，处理事件
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
