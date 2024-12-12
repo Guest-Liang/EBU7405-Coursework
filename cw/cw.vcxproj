@@ -148,10 +148,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\glad.c" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="GLfs.fs" />
-    <None Include="GLvs.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -42,9 +42,16 @@ float fixedYaw;                             // 固定模式下的水平旋转角度
 float fixedPitch;                           // 固定模式下的垂直旋转角度
 
 glm::mat4 fixViewMatrix;
+
+glm::vec3 Upward    = glm::vec3( 0.0f,   1.0f,   0.0f);
+glm::vec3 Downward  = glm::vec3( 0.0f,  -1.0f,   0.0f);
+glm::vec3 Leftward  = glm::vec3(-1.0f,   0.0f,   0.0f);
+glm::vec3 Rightward = glm::vec3( 1.0f,   0.0f,   0.0f);
+glm::vec3 Forward   = glm::vec3( 0.0f,   0.0f,  -1.0f);
+glm::vec3 Backward  = glm::vec3( 0.0f,   0.0f,   1.0f);
 //-------------Configuration----------------
 
-std::string GetCurrentTimeString()
+static std::string GetCurrentTimeString()
 {
     auto now = std::chrono::system_clock::now();
     auto now_time_t = std::chrono::system_clock::to_time_t(now);
@@ -67,7 +74,7 @@ std::string GetCurrentTimeString()
     return oss.str();
 }
 
-void LogInfo() {
+static void LogInfo() {
     std::string timeStr = GetCurrentTimeString();
     std::cout << timeStr << std::endl;
 
@@ -121,7 +128,7 @@ void LogInfo() {
         << std::left << std::setw(width) << camUpStr.str() << std::endl;
 }
 
-void ResetParams()
+static void ResetParams()
 {
     fov = 45.0f;
     deltaTime = 0.0f;	                                                // time between current frame and last frame
@@ -134,7 +141,7 @@ void ResetParams()
 
     lastX = 0, lastY = 0;                                               // 上一次鼠标位置
     radius = 4.0f;                                                      // 摄像机到固定模式的中心的距离
-    camPos = glm::vec3(-2.0f, 1.0f, 2.0f);                              // 存储摄像机的位置（x, y, z）
+    camPos = 10.0f * glm::vec3(-2.0f, 1.0f, 2.0f);                      // 存储摄像机的位置（x, y, z）
     camFront = glm::normalize(glm::vec3(1.0f, -0.5f, -1.0f));           // 摄像机的前方向
     camUp = glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f));                // 摄像机的上方向
     freeModePitch = glm::degrees(std::asin(camFront.y));                // freeModePitch 前方向y分量的反正弦值
@@ -146,20 +153,20 @@ void ResetParams()
     // 初始化视图矩阵为固定模式
     fixViewMatrix = glm::lookAt(
         glm::vec3(radius * cos(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch)),
-            radius * sin(glm::radians(fixedPitch)),
-            radius * sin(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch))),
+                  radius * sin(glm::radians(fixedPitch)),
+                  radius * sin(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch))),
         glm::vec3(0.0f, 0.0f, 0.0f),
         camUp);
 }
 
-void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
     fov -= (float)yoffset;
     if (fov < 1.0f) fov = 1.0f;
     if (fov > 45.0f) fov = 45.0f;
 }
 
-void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
     if (isDragging) {
         float xpos = static_cast<float>(xposIn);
@@ -187,7 +194,7 @@ void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
             if (freeModePitch > 89.0f) freeModePitch = 89.0f;
             if (freeModePitch < -89.0f) freeModePitch = -89.0f;
 
-            glm::vec3 front;
+            glm::vec3 front = glm::vec3(0.0f, 0.0f, 0.0f);
             front.x = cos(glm::radians(freeModeYaw)) * cos(glm::radians(freeModePitch));
             front.y = sin(glm::radians(freeModePitch));
             front.z = sin(glm::radians(freeModeYaw)) * cos(glm::radians(freeModePitch));
@@ -215,7 +222,7 @@ void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
     }
 }
 
-void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT)       // 监听左键
     {
@@ -227,7 +234,7 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
     }
 }
 
-void PrintKeyEvent(int key, const std::string& eventType)
+static void PrintKeyEvent(int key, const std::string& eventType)
 {
     std::string timeStr = GetCurrentTimeString();
 
@@ -240,7 +247,7 @@ void PrintKeyEvent(int key, const std::string& eventType)
     }
 }
 
-void ProcessInput(GLFWwindow* window)
+static void ProcessInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
@@ -283,7 +290,7 @@ void ProcessInput(GLFWwindow* window)
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
-    float cameraSpeed = static_cast<float>(2.5 * deltaTime);
+    float cameraSpeed = static_cast<float>(10 * deltaTime);
 
     if (isFreeMoveMode) {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) camPos += cameraSpeed * camFront;
@@ -306,8 +313,20 @@ void ProcessInput(GLFWwindow* window)
     }
 }
 
+static glm::vec3 TransRGBtoVec3(float red, float green, float blue)
+{
+	return glm::vec3(red / 255.0f, green / 255.0f, blue / 255.0f);
+}
 
-void DrawCube() {
+static glm::vec3 TransHEXtoVec3(int hex)
+{
+	float red = ((hex >> 16) & 0xFF);
+	float green = ((hex >> 8) & 0xFF);
+	float blue = (hex & 0xFF);
+	return TransRGBtoVec3(red, green, blue);
+}
+
+static void DrawUnitCube() {
     glBegin(GL_QUADS);
 
     // 正面 (蓝色)
@@ -355,8 +374,274 @@ void DrawCube() {
     glEnd();
 }
 
+static void DrawCube(const glm::vec3& color, float edgeLength, const glm::vec3& center) {
+    float halfEdge = edgeLength / 2.0f;
+
+    glColor3f(color.x, color.y, color.z); // 设置颜色
+
+    glBegin(GL_QUADS);
+
+    // 正面
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z + halfEdge);
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z + halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z + halfEdge);
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z + halfEdge);
+
+    // 背面
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z - halfEdge);
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z - halfEdge);
+
+    // 上面
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z - halfEdge);
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z + halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z + halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z - halfEdge);
+
+    // 下面
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z + halfEdge);
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z + halfEdge);
+
+    // 左面
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z - halfEdge);
+    glVertex3f(center.x - halfEdge, center.y - halfEdge, center.z + halfEdge);
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z + halfEdge);
+    glVertex3f(center.x - halfEdge, center.y + halfEdge, center.z - halfEdge);
+
+    // 右面
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z - halfEdge);
+    glVertex3f(center.x + halfEdge, center.y + halfEdge, center.z + halfEdge);
+    glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z + halfEdge);
+
+    glEnd();
+}
+
+static void DrawFirefly() {
+    // https://www.douyin.com/note/7388460523207134483
+	glm::vec3 Origin = glm::vec3(0.0f, 0.0f, 0.0f);
+	int Color_Firefly = 0xafe0d1;
+    int Color_cha = 0xc8cabd; // 9a9a8a
+	int Color_Black = 0x000000;
+	int Color_White = 0xffffff;
+    int Color_Gray = 0xf2f2ef;
+
+    // line1 
+    {
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 1.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 2.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 3.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 4.0f * Rightward);
+
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 9.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 10.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 11.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 12.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 13.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 14.0f * Rightward);
+
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 17.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 18.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 19.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 20.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 21.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 22.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 23.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Origin + 24.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 25.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Origin + 26.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Origin + 27.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 28.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 29.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 30.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 31.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 32.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 33.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 34.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 35.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 36.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 37.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 38.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 39.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 40.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 41.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 42.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 43.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 44.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 45.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 46.0f * Rightward);
+	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 47.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 48.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 49.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 50.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 51.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 52.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 53.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 54.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 55.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 56.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 57.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 58.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 59.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 60.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 61.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 62.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 63.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 64.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 65.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 66.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 67.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 68.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 69.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 70.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 71.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Origin + 72.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 73.0f * Rightward);
+
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 74.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 75.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 76.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 77.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 78.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 79.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 80.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 81.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 82.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 83.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 84.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 85.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 86.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 87.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Origin + 88.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Origin + 89.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 90.0f * Rightward);
+
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Origin + 98.0f * Rightward);
+    }
+    // endline1
+
+    glm::vec3 Line2Origin = Origin + 2.0f * Leftward + 1.0f * Upward;
+    // line2
+    {
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 1.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 2.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 3.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 4.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 5.0f * Rightward);
+
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 10.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 11.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 12.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 13.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 14.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 15.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 16.0f * Rightward);
+
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 19.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 20.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 21.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 22.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 23.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 24.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 25.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 26.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Line2Origin + 27.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Line2Origin + 28.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, Line2Origin + 29.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 30.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 31.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 32.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 33.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 34.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 35.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 36.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 37.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 38.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 39.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 40.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 41.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 42.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 43.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 44.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 45.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 46.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 47.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 48.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 49.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 50.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 51.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 52.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 53.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 54.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 55.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 56.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 57.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 58.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 59.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 60.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 61.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 62.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 63.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 64.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 65.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 66.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 67.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 68.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 69.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 70.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 71.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 72.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_White),   1.0f, Line2Origin + 73.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 74.0f * Rightward);
+
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 75.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 76.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 77.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 78.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 79.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 80.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 81.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 82.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 83.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 84.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 85.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 86.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 87.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 88.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 89.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, Line2Origin + 90.0f * Rightward);
+        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, Line2Origin + 91.0f * Rightward);
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 92.0f * Rightward);
+
+		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, Line2Origin + 100.0f * Rightward);
+
+
+
+    }
+	// endline2
+
+	glm::vec3 Line3Origin = Line2Origin + 1.0f * Leftward + 1.0f * Upward;
+	// line3
+    {
+
+    }
+	// endline3
+
+} 
+
+static void DrawAll() {
+	//DrawUnitCube();
+	DrawFirefly();
+}
+
 int main() {
     std::cout << glfwGetVersionString() << std::endl;
+
 	ResetParams();
 
     if (!glfwInit()) {
@@ -407,8 +692,7 @@ int main() {
         glMatrixMode(GL_MODELVIEW);                 // 设置视图矩阵
         glLoadMatrixf(&view[0][0]);
 
-        // 绘制正方体
-        DrawCube();
+		DrawAll(); // 绘制
 
         // 交换缓冲区，处理事件
         glfwSwapBuffers(window);
