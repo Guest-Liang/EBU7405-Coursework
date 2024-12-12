@@ -463,70 +463,32 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
 	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+		for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-	    DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 	    DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+		for (int i = 0; i < 8; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+		}
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 8.0f * Rightward);
@@ -553,77 +515,41 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 3.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 8; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
@@ -644,50 +570,31 @@ static void DrawFirefly() {
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 2.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -697,36 +604,16 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 9; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 7.0f * Rightward);
@@ -747,89 +634,44 @@ static void DrawFirefly() {
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 2.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 6; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 9; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 6.0f * Rightward);
@@ -851,89 +693,50 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 2.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 6; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+		for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
@@ -957,90 +760,54 @@ static void DrawFirefly() {
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 2.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 6; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
@@ -1062,91 +829,52 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 6; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold1),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gold),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
@@ -1170,54 +898,32 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 6; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gold),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Brown1),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1226,36 +932,22 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
@@ -1265,7 +957,7 @@ static void DrawFirefly() {
 	}
 	// endline8
 
-	// line9
+	// line9 done
 	glm::vec3 Line9Origin = Line8Origin + 1.0f * Upward;
 	nowDrawingPoint = Line9Origin;
 	{
@@ -1280,91 +972,49 @@ static void DrawFirefly() {
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 4.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 6; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 8; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Brown1),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 3.0f * Rightward);
@@ -1375,7 +1025,7 @@ static void DrawFirefly() {
 	}
 	// endline9
 
-	// line10
+	// line10 done
 	glm::vec3 Line10Origin = Line9Origin + 1.0f * Upward;
 	nowDrawingPoint = Line10Origin;
 	{
@@ -1388,91 +1038,49 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 6; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gold),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gold),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
@@ -1483,7 +1091,7 @@ static void DrawFirefly() {
 	}
 	// endline10
 
-	// line11
+	// line11 done
 	glm::vec3 Line11Origin = Line10Origin + 1.0f * Upward;
 	nowDrawingPoint = Line11Origin;
 	{
@@ -1492,24 +1100,13 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1521,19 +1118,9 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 7; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 4; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
 		DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1541,17 +1128,13 @@ static void DrawFirefly() {
 		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange1), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1562,25 +1145,16 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
 		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward); // 图里是空的，这里填充一个cha色
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
@@ -1592,7 +1166,7 @@ static void DrawFirefly() {
 	}
 	// endline11
 
-	// line12
+	// line12 done
 	glm::vec3 Line12Origin = Line11Origin + 1.0f * Upward;
 	nowDrawingPoint = Line12Origin;
 	{
@@ -1601,30 +1175,18 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 5.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1633,63 +1195,37 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 8; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_White),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange1), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange1), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange1),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Gold),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 2.0f * Rightward);
@@ -1701,7 +1237,7 @@ static void DrawFirefly() {
 	}
 	// endline12
 
-	// line13
+	// line13 done
 	glm::vec3 Line13Origin = Line12Origin + 1.0f * Upward + 1.0f * Rightward;
     nowDrawingPoint = Line13Origin;
     {
@@ -1713,92 +1249,53 @@ static void DrawFirefly() {
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
 
 		DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 6.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-		DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 7; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 9; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 5; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange1), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange1), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange1),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Gold),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Orange),  1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Orange),    1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Brown),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Brown),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Gray),    1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Gray),      1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_White),   1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 3; i++) { DrawCube(TransHEXtoVec3(Color_Firefly),   1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
+        for (int i = 0; i < 4; i++) {
+            DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
+            DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
+        }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
-        DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
+        for (int i = 0; i < 2; i++) { DrawCube(TransHEXtoVec3(Color_Black),     1.0f, nowDrawingPoint += 1.0f * Rightward); }
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_cha),     1.0f, nowDrawingPoint += 1.0f * Rightward);
         DrawCube(TransHEXtoVec3(Color_Firefly), 1.0f, nowDrawingPoint += 1.0f * Rightward);
@@ -1806,6 +1303,8 @@ static void DrawFirefly() {
         DrawCube(TransHEXtoVec3(Color_Black),   1.0f, nowDrawingPoint += 1.0f * Rightward);
     }
 	// endline13
+
+	// line14
 } 
 
 static void DrawAll() {
