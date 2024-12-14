@@ -128,6 +128,62 @@ line79 = "B,G1,B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,B,B,C,C,C,C,C,C,C
 
 line80 = "B,G1,G1,B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,B,B,C,C,C,C,C,C,C,B,C,C,C,C,C,C,C,G1,C,C,C,C,C,C,C,C,G1,W,W,W,G1,C,C,C,B,C,C,C,C,C,C,C,C,B,G1,W,W,W,W,W,W,W,W,B,F,F,F,G1,F,F,B"
 
+line81 = "B,G1,G1,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,B,B,C,C,C,C,C,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,G1,W,G1,C,C,C,C,B,C,C,C,C,C,C,C,C,B,G1,W,W,W,W,W,W,W,W,B,G1,G1,F,G1,F,F,B"
+
+line82 = "B,G1,G1,B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,GO1,B,B,C,C,C,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,G1,W,G1,C,C,C,B,C,C,C,C,C,C,C,B,B,C,G1,W,W,W,W,W,W,W,B,F,F,F,G1,G1,G1,F,F,B"
+
+line83 = "B,G1,G1,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,GO1,GO1,B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,G1,C,C,C,C,B,C,C,C,C,B,B,B,BR,B,C,C,G1,W,W,W,W,W,W,B,B,F,F,F,F,G1,F,F,B"
+
+line84 = "B,G1,G1,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,BR,GO1,F,F,B,B,B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,B,B,B,B,BR,BR,BR,BR,B,C,C,G1,W,W,W,W,W,B,F,F,B,B,F,F,F,F,F,B"
+
+line85 = "B,G1,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,GO1,GO1,F,F,F,F,F,B,B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,B,B,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,G1,W,W,W,W,W,B,F,F,G1,F,B,B,F,F,F,B"
+
+line86 = "B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,BR,GO1,F,F,F,F,F,F,F,F,B,B,B,B,B,B,B,B,B,B,B,B,B,B,B,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,G1,W,W,W,W,B,G1,F,F,G1,F,B,,2B,B,F,B"
+
+line87 = "B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,GO1,GO1,F,F,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,C,G1,W,W,W,B,F,G1,F,G1,F,B,,4B,B"
+
+line88 = "B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,BR,BR,GO1,GO1,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,C,C,G1,W,W,B,B,F,F,G1,G1,F,B,,5B"
+
+line89 = "B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,BR,BR,BR,BR,GO1,GO1,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,C,C,G1,W,W,B,,2B,F,G1,G1,F,B"
+
+line90 = "B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,BR,BR,GO1,GO1,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,C,C,C,C,C,G1,W,W,B,,3B,F,F,G1,F,B"
+
+line91 = "B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,B,GO1,F,F,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,B,C,C,C,C,C,C,G1,W,B,,5B,F,G1,F,B"
+
+line92 = "B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,C,B,B,B,F,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,B,C,B,C,C,C,C,C,C,G1,B,,6B,F,F,F,B"
+
+line93 = "B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,C,C,C,B,B,F,F,F,F,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,B,B,C,B,C,C,C,C,C,C,C,C,B,,7B,F,F,B"
+
+line94 = "B,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,C,C,C,C,B,B,B,B,B,GO1,GO1,BR,BR,BR,BR,BR,BR,BR,BR,BR,BR,B,B,B,B,B,C,C,C,C,B,C,C,C,C,C,C,C,B,,8B,F,F,B"
+
+line95 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,C,C,C,C,C,C,C,C,B,B,B,B,B,B,B,B,B,B,B,B,C,C,C,C,C,C,C,C,B,C,C,C,C,C,C,C,B,,9B,F,F,B"
+
+line96 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,C,C,C,C,C,C,C,B,,10B,F,B"
+
+line97 = "B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,G1,B,C,C,C,C,C,C,C,B,,11B,F,B"
+
+line98 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,B,B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,G1,G1,B,C,C,C,C,C,C,C,B,,12B,B"
+
+line99 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,G1,G1,B,B,B,B,B,C,C,C,C,B,B,B,B,B,G1,G1,G1,B,C,C,C,C,C,C,C,B,,12B,B"
+
+line100 = "B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,G1,G1,G1,G1,B,C,C,C,C,C,C,B,G1,G1,G1,G1,G1,B,C,C,C,C,C,C,C,B,,12B"
+
+line101 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,G1,G1,G1,B,B,C,C,C,C,C,C,C,C,B,G1,G1,B,B,C,C,C,C,C,C,B,B"
+
+line102 = "B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B,B,C,C,C,C,C,C,C,C,C,C,C,B,B,C,C,C,C,C,C,C,B"
+
+line103 = "B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B"
+
+line104 = "B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,C,C,C,C,C,C,C,C,C,C,C,C,C,B,B"
+
+line105 = "B,B,C,C,C,C,C,C,C,C,C,C,C,C,C,C,C,B,C,C,C,C,B,C,C,C,C,C,C,C,B,B"
+
+line106 = "B,B,B,C,C,C,C,C,C,C,C,C,C,C,B,C,C,C,C,C,C,B,B,C,C,C,B,B"
+
+line107 = "B,B,B,B,B,C,C,C,C,B,B,2B,B,B,B,B,B,3B,B,B"
+
+line108 = "B,B,B,B"
+
 def main():
     char_to_color = {
         'F': "Firefly",
@@ -150,7 +206,7 @@ def main():
         '': "",
     }
 
-    input_string = line80
+    input_string = line108
 
     characters = input_string.split(',')
     optimized_output = []
