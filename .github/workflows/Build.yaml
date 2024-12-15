@@ -35,7 +35,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: GuestLiangOpenGLcw
+        name: GuestLiangOpenGLcw-Win
         path: cw\x64\Release\GuestLiangOpenGLcw-Win.exe
 
   build-ubuntu:
@@ -63,7 +63,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: GuestLiangOpenGLcw
+        name: GuestLiangOpenGLcw-Linux
         path: cw/build/GuestLiangOpenGLcw-Linux
 
   draft-release:
