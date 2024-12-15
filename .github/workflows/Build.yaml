@@ -85,7 +85,8 @@ jobs:
     - name: Extract version from Resource.rc
       id: extract_version
       run: |
-        VERSION=$(grep -oP 'VALUE "FileVersion", "\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' cw/Resource.rc)
+        cd cw
+        VERSION=$(grep -oP 'VALUE "FileVersion", "\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' ./Resource.rc)
         echo "Extracted version: $VERSION"
         echo "version=$VERSION" >> $GITHUB_ENV
         export VERSION
