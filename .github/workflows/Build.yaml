@@ -18,17 +18,19 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Install MinGW (GCC for Windows)
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Install Visual Studio Build Tools
       shell: powershell
       run: |
-        choco install mingw --yes
+        Invoke-WebRequest -Uri https://aka.ms/vs/17/release/vs_buildtools.exe -OutFile vs_buildtools.exe
+        Start-Process -Wait -NoNewWindow -FilePath "vs_buildtools.exe" -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--add Microsoft.VisualStudio.Workload.VCTools"
 
-    - name: Compile with g++
-      shell: bash
+    - name: Build project
       run: |
         cd cw
-        mkdir -p build
-        g++ main.cpp ./src/glad.c -std=c++20 -Iincludes -Llib -lglfw3 -lopengl32 -o build/GuestLiangOpenGLcw.exe
+        "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" ./cw.sln /p:Configuration=Release
 
 
   build-ubuntu:
@@ -41,15 +43,17 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake libgl1-mesa-dev
-        sudo apt install -y libxinerama-dev
-        sudo apt install -y libwayland-dev
-        sudo apt install -y libxkbcommon-dev
-        sudo apt install -y libxcursor-dev
-        sudo apt install -y libxi-dev
+        sudo apt install -y build-essential cmake libgl1-mesa-dev libxinerama-dev libwayland-dev libxkbcommon-dev libxcursor-dev libxi-dev
 
     - name: Configure and Build
       run: |
         cd cw
         mkdir -p build
         g++ main.cpp ./src/glad.c -std=c++20 -Iincludes -Llib -lglfw3 -lGL -ldl -o build/GuestLiangOpenGLcw
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: GuestLiangOpenGLcw
+        path: cw/build/GuestLiangOpenGLcw
+
