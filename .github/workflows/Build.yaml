@@ -26,6 +26,7 @@ jobs:
     - name: Compile with g++
       shell: bash
       run: |
+        cd cw
         mkdir -p build
         g++ main.cpp ./src/glad.c -std=c++20 -Iincludes -Llib -lglfw3 -lopengl32 -o build/GuestLiangOpenGLcw.exe
 
@@ -49,4 +50,6 @@ jobs:
 
     - name: Configure and Build
       run: |
+        cd cw
+        mkdir -p build
         g++ main.cpp ./src/glad.c -std=c++20 -Iincludes -Llib -lglfw3 -lGL -ldl -o build/GuestLiangOpenGLcw
