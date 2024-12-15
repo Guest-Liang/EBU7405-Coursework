@@ -5,7 +5,7 @@ on:
 
   push:
     branches:
-      - testci
+      - main
 
 jobs:
   build-windows:
@@ -135,7 +135,7 @@ jobs:
     - name: Find Windows exe file
       id: find_windows_exe
       run: |
-        EXE_FILE=$(ls build/*-Win- | head -n 1)
+        EXE_FILE=$(ls build/*-Win-* | head -n 1)
         EXE_BASENAME=$(basename "$EXE_FILE")
         echo "WIN_EXE_FILE=$EXE_FILE" >> $GITHUB_ENV
         echo "WIN_EXE_BASENAME=$EXE_BASENAME" >> $GITHUB_ENV
