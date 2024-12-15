@@ -82,7 +82,7 @@ jobs:
     - name: Download Windows Artifact
       uses: actions/download-artifact@v4
       with:
-        name: GuestLiangOpenGLcw-Win.exe
+        name: GuestLiangOpenGLcw-Win
         path: ./build
 
     - name: Extract version from resource.rc
