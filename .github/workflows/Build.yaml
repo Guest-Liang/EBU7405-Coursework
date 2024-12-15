@@ -2,7 +2,7 @@ name: Build OpenGL Project
 
 on:
   workflow_dispatch:
-  
+
   push:
     branches:
       - testci
@@ -22,6 +22,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Install Visual Studio Build Tools
+      shell: powershell
       run: |
         choco install visualstudio2022buildtools --params "'/Workload:DesktopDevelopment'" --yes
 

@@ -22,6 +22,10 @@ include_directories(
 
 # 添加 GLAD 库
 add_library(glad "src/glad.c")
+set_target_properties(glad PROPERTIES LINKER_LANGUAGE C)
+
+# 查找 OpenGL 库
+find_package(OpenGL REQUIRED)
 
 # 链接库
 target_link_libraries(GuestLiangOpenGLcw PRIVATE glad glfw OpenGL::GL)
