@@ -16,7 +16,9 @@
 #define GL_MULTISAMPLE 0x809D
 #endif
 //-------------Configuration----------------
-constexpr double M_PI = 3.14159265358979323846;
+#ifndef M_PI
+#define M_PI = 3.14159265358979323846;
+#endif // !M_PI
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -57,18 +59,27 @@ static std::string GetCurrentTimeString()
     auto now = std::chrono::system_clock::now();
     auto now_time_t = std::chrono::system_clock::to_time_t(now);
     auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
     struct tm tm_info;
 
-    errno_t err = localtime_s(&tm_info, &now_time_t);
-    if (err)
+    // Windows 使用 localtime_s，Linux/Unix 使用 localtime_r
+#if defined(_MSC_VER) || defined(__MINGW32__) // Windows 平台
+    if (localtime_s(&tm_info, &now_time_t) != 0)
     {
         std::cerr << "Failed to get local time." << std::endl;
         return "[unknown time]";
     }
+#else // Linux/Unix 平台
+    if (localtime_r(&now_time_t, &tm_info) == nullptr)
+    {
+        std::cerr << "Failed to get local time." << std::endl;
+        return "[unknown time]";
+    }
+#endif
 
+    // 格式化输出时间
     std::ostringstream oss;
-    oss << "["
-        << std::put_time(&tm_info, "%Y-%m-%d %H:%M:%S")
+    oss << "[" << std::put_time(&tm_info, "%Y-%m-%d %H:%M:%S")
         << "." << std::setfill('0') << std::setw(3) << now_ms.count()
         << "]";
 
