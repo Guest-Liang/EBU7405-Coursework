@@ -21,23 +21,22 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    # - name: Install Visual Studio Build Tools
-    #   shell: powershell
-    #   run: |
-    #     Invoke-WebRequest -Uri https://aka.ms/vs/17/release/vs_buildtools.exe -OutFile vs_buildtools.exe
-    #     Start-Process -Wait -NoNewWindow -FilePath "vs_buildtools.exe" -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--add Microsoft.VisualStudio.Workload.VCTools"
-
     - name: Build project
       shell: powershell
       run: |
         cd cw
         & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" ./cw.sln /p:Configuration=Release
+
+    - name: Rename artifact
+      shell: powershell
+      run: |
+        Rename-Item -Path .\cw\x64\Release\GuestLiangOpenGLcw.exe -NewName GuestLiangOpenGLcw-Win.exe
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: GuestLiangOpenGLcw
-        path: cw\x64\Release\GuestLiangOpenGLcw.exe
+        path: cw\x64\Release\GuestLiangOpenGLcw-Win.exe
 
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -57,11 +56,15 @@ jobs:
         mkdir -p build
         g++ main.cpp ./src/glad.c -std=c++20 -Iincludes -Llib -lglfw3 -lGL -ldl -o build/GuestLiangOpenGLcw
 
+    - name: Rename artifact
+      run: |
+        mv cw/build/GuestLiangOpenGLcw cw/build/GuestLiangOpenGLcw-Linux
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: GuestLiangOpenGLcw
-        path: cw/build/GuestLiangOpenGLcw
+        path: cw/build/GuestLiangOpenGLcw-Linux
 
   draft-release:
     runs-on: ubuntu-latest
@@ -73,13 +76,13 @@ jobs:
     - name: Download Linux Artifact
       uses: actions/download-artifact@v4
       with:
-        name: GuestLiangOpenGLcw
+        name: GuestLiangOpenGLcw-Linux
         path: ./build
 
     - name: Download Windows Artifact
       uses: actions/download-artifact@v4
       with:
-        name: GuestLiangOpenGLcw.exe
+        name: GuestLiangOpenGLcw-Win.exe
         path: ./build
 
     - name: Extract version from resource.rc
@@ -104,8 +107,8 @@ jobs:
 
     - name: Rename Artifact
       run: |
-        mv build/GuestLiangOpenGLcw.exe build/GuestLiangOpenGLcw-Win-v${{ env.VERSION }}.exe
-        mv build/GuestLiangOpenGLcw build/GuestLiangOpenGLcw-Linux-v${{ env.VERSION }}
+        mv build/GuestLiangOpenGLcw-Win.exe build/GuestLiangOpenGLcw-Win-v${{ env.VERSION }}.exe
+        mv build/GuestLiangOpenGLcw-Linux build/GuestLiangOpenGLcw-Linux-v${{ env.VERSION }}
 
     - name: ls file
       shell: bash
