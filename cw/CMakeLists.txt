@@ -28,4 +28,9 @@ set_target_properties(glad PROPERTIES LINKER_LANGUAGE C)
 find_package(OpenGL REQUIRED)
 
 # 链接库
-target_link_libraries(GuestLiangOpenGLcw PRIVATE glad glfw OpenGL::GL)
+target_link_libraries(GuestLiangOpenGLcw
+    PRIVATE
+    glad
+    ${CMAKE_SOURCE_DIR}/lib/glfw3.lib  # 手动指定 glfw3.lib 路径
+    OpenGL::GL
+)

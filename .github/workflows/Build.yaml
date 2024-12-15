@@ -21,15 +21,17 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Install Visual Studio Build Tools
+    - name: Install Visual Studio Build Tools (Manual Download)
       shell: powershell
       run: |
-        choco install visualstudio2022buildtools --params "'/Workload:DesktopDevelopment'" --yes
+        Invoke-WebRequest -Uri https://aka.ms/vs/17/release/vs_buildtools.exe -OutFile vs_buildtools.exe
+        Start-Process -Wait -NoNewWindow -FilePath "vs_buildtools.exe" -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--add Microsoft.VisualStudio.Workload.VCTools"
 
     - name: Build project
       run: |
         cd cw
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" cw.sln /p:Configuration=Release
+
 
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -41,7 +43,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential cmake libgl1-mesa-dev libglfw3-dev libglm-dev
+        sudo apt install -y build-essential cmake libgl1-mesa-dev
 
     - name: Configure and Build
       run: |
