@@ -5,10 +5,10 @@ on:
 
   push:
     branches:
-      - testci
+      - main
   pull_request:
     branches:
-      - testci
+      - main
 
 jobs:
   build-windows:
@@ -85,10 +85,10 @@ jobs:
         name: GuestLiangOpenGLcw-Win
         path: ./build
 
-    - name: Extract version from resource.rc
+    - name: Extract version from Resource.rc
       id: extract_version
       run: |
-        VERSION=$(grep -oP 'VALUE "FileVersion", "\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' cw/resource.rc)
+        VERSION=$(grep -oP 'VALUE "FileVersion", "\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' cw/Resource.rc)
         echo "Extracted version: $VERSION"
         echo "version=$VERSION" >> $GITHUB_ENV
         export VERSION
