@@ -28,10 +28,16 @@ jobs:
         Start-Process -Wait -NoNewWindow -FilePath "vs_buildtools.exe" -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--add Microsoft.VisualStudio.Workload.VCTools"
 
     - name: Build project
+      shell: powershell
       run: |
         cd cw
-        "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" ./cw.sln /p:Configuration=Release
-
+        & "C:\\Program Files\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe" ./cw.sln /p:Configuration=Release
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: GuestLiangOpenGLcw
+        path: cw\x64\Release\GuestLiangOpenGLcw.exe
 
   build-ubuntu:
     runs-on: ubuntu-latest
@@ -57,3 +63,90 @@ jobs:
         name: GuestLiangOpenGLcw
         path: cw/build/GuestLiangOpenGLcw
 
+  draft-release:
+    runs-on: ubuntu-latest
+    needs: [build-windows, build-ubuntu]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download Linux Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: GuestLiangOpenGLcw
+        path: ./build
+
+    - name: Download Windows Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: GuestLiangOpenGLcw.exe
+        path: ./build
+
+    - name: Extract version from resource.rc
+      id: extract_version
+      run: |
+        VERSION=$(grep -oP 'VALUE "FileVersion", "\K[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' cw/resource.rc)
+        echo "Extracted version: $VERSION"
+        echo "version=$VERSION" >> $GITHUB_ENV
+        export VERSION
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: "v${{ env.VERSION }}"
+        release_name: "OpenGL Coursework v${{ env.VERSION }}"
+        body: ""
+        draft: true
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Rename Artifact
+      run: |
+        mv build/GuestLiangOpenGLcw.exe build/GuestLiangOpenGLcw-Win-v${{ env.VERSION }}.exe
+        mv build/GuestLiangOpenGLcw build/GuestLiangOpenGLcw-Linux-v${{ env.VERSION }}
+
+    - name: ls file
+      shell: bash
+      run: ls build/
+
+    - name: Find Linux file
+      id: find_linux
+      run: |
+        FILE=$(ls build/*-Linux-* | head -n 1)
+        BASENAME=$(basename "$FILE")
+        echo "LINUX_FILE=$FILE" >> $GITHUB_ENV
+        echo "LINUX_BASENAME=$BASENAME" >> $GITHUB_ENV
+        export LINUX_FILE
+        export LINUX_BASENAME
+
+    - name: Upload Linux Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.LINUX_FILE }}
+        asset_name: ${{ env.LINUX_BASENAME }}
+        asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Find Windows exe file
+      id: find_windows_exe
+      run: |
+        EXE_FILE=$(ls build/*-Win- | head -n 1)
+        EXE_BASENAME=$(basename "$EXE_FILE")
+        echo "WIN_EXE_FILE=$EXE_FILE" >> $GITHUB_ENV
+        echo "WIN_EXE_BASENAME=$EXE_BASENAME" >> $GITHUB_ENV
+        export WIN_EXE_FILE
+        export WIN_EXE_BASENAME
+
+    - name: Upload Windows Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.WIN_EXE_FILE }}
+        asset_name: ${{ env.WIN_EXE_BASENAME }}
+        asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
