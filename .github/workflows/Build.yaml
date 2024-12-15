@@ -1,0 +1,52 @@
+name: Build OpenGL Project
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches:
+      - testci
+  pull_request:
+    branches:
+      - testci
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup Visual Studio
+      uses: microsoft/setup-visualstudio@v1
+      with:
+        vs-version: 2022
+
+    - name: Build project
+      run: |
+        cd cw
+        "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" cw.sln /p:Configuration=Release
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential cmake libgl1-mesa-dev
+
+    - name: Configure and Build
+      run: |
+        cd cw
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+        make
