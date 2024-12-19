@@ -16,9 +16,7 @@
 #define GL_MULTISAMPLE 0x809D
 #endif
 //-------------Configuration----------------
-#ifndef M_PI
-#define M_PI = 3.14159265358979323846;
-#endif // !M_PI
+int mathPI = 3.14159265358979323846;
 
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
@@ -46,12 +44,44 @@ float fixedPitch;                           // 固定模式下的垂直旋转角度
 
 glm::mat4 fixViewMatrix;
 
+glm::vec3 Origin    = glm::vec3( 0.0f,   0.0f,   0.0f);
 glm::vec3 Upward    = glm::vec3( 0.0f,   1.0f,   0.0f);
 glm::vec3 Downward  = glm::vec3( 0.0f,  -1.0f,   0.0f);
 glm::vec3 Leftward  = glm::vec3(-1.0f,   0.0f,   0.0f);
 glm::vec3 Rightward = glm::vec3( 1.0f,   0.0f,   0.0f);
 glm::vec3 Forward   = glm::vec3( 0.0f,   0.0f,  -1.0f);
 glm::vec3 Backward  = glm::vec3( 0.0f,   0.0f,   1.0f);
+
+int Color_Firefly       = 0xafe0d1;
+int Color_cha           = 0xc8cabd; // 9a9a8a
+int Color_Black         = 0x000000;
+int Color_White         = 0xffffff;
+int Color_Gray          = 0xf2f2ef;
+int Color_Gray1         = 0xa9a798;
+int Color_Orange        = 0xd68c4c;
+int Color_Orange1       = 0xc37f4e;
+int Color_Brown         = 0x423129;
+int Color_Brown1        = 0x4a372b;
+int Color_Brown2        = 0x998274;
+int Color_Gold          = 0xebd160;
+int Color_Gold1         = 0xd3b157;
+int Color_Pink          = 0xfff1de; //e5d5c5
+int Color_Pink1         = 0xffafc8;
+int Color_IndigoBlue    = 0x635ca2;
+int Color_BlueGray      = 0x71bbc8;
+int Color_Ground        = 0x1f3341;
+
+struct AnimatedObject {
+    glm::vec3 position;  // 动态位置
+    float rotation;      // 动态旋转角度
+    glm::vec3 scale;     // 动态缩放
+};
+
+AnimatedObject animatedCube = {
+    glm::vec3(0.0f, 0.0f, 0.0f),  // 初始位置
+    0.0f,                         // 初始旋转角度
+    glm::vec3(1.0f, 1.0f, 1.0f)   // 初始缩放
+};
 //-------------Configuration----------------
 
 static std::string GetCurrentTimeString()
@@ -138,6 +168,23 @@ static void LogInfo() {
         << "(" << camUp.x << ", " << camUp.y << ", " << camUp.z << ")";
     std::cout << std::left << std::setw(width) << "camUp"
         << std::left << std::setw(width) << camUpStr.str() << std::endl;
+}
+
+static void PrintHelp() {
+    std::cout << "Use W, A, S, D, (Space and C) to move the camera" << std::endl;
+    std::cout << "Use mouse to rotate the camera" << std::endl;
+    std::cout << "Use mouse wheel to zoom in/out" << std::endl;
+    std::cout << "Press R to reset the camera params" << std::endl;
+    std::cout << "Press M to change to rotate mode" << std::endl;
+    std::cout << "Press L to print log info" << std::endl;
+    std::cout << "Press H to print this help message" << std::endl;
+    std::cout << "Press Esc to exit the program" << std::endl;
+}
+
+static void PrintSystemInfo() {
+    std::string timeStr = GetCurrentTimeString();
+    std::cout << timeStr << "Program Running..." << std::endl;
+    std::cout << "GLFW Version: " << glfwGetVersionString() << std::endl;
 }
 
 static void ResetParams()
@@ -251,16 +298,18 @@ static void PrintKeyEvent(int key, const std::string& eventType)
 {
     std::string timeStr = GetCurrentTimeString();
 
-    const char* keyName = glfwGetKeyName(key, 0);
+    int scancode = glfwGetKeyScancode(key);
+
+    const char* keyName = glfwGetKeyName(key, scancode);
     if (keyName) {
-        std::cout << timeStr << " " << keyName << " key " << eventType << std::endl;
+        std::cout << timeStr << " " << keyName << " key (scancode: " << scancode << ") " << eventType << std::endl;
     }
     else {
-        std::cout << timeStr << " Unknown key with code " << key << " " << eventType << std::endl;
+        std::cout << timeStr << " Unknown key with code " << key << " (scancode: " << scancode << ") " << eventType << std::endl;
     }
 }
 
-static void ProcessInput(GLFWwindow* window)
+static void ProcessInput(GLFWwindow* window, float deltaTime)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
@@ -278,7 +327,7 @@ static void ProcessInput(GLFWwindow* window)
         keys[GLFW_KEY_M] = false; // 标记 M 键释放
     }
 
-    // 监听 L 键，按一次就LogInfo
+    // 监听 L 键，输出LogInfo
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS && !keys[GLFW_KEY_L]) {
         PrintKeyEvent(GLFW_KEY_L, "pressed");
         keys[GLFW_KEY_L] = true; // 标记 L 键按下
@@ -289,7 +338,7 @@ static void ProcessInput(GLFWwindow* window)
         keys[GLFW_KEY_L] = false; // 标记 L 键释放
     }
     
-    // 监听 R 键，按一次就复原所有参数
+    // 监听 R 键，复原所有参数
     if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS && !keys[GLFW_KEY_R]) {
         PrintKeyEvent(GLFW_KEY_R, "pressed");
         keys[GLFW_KEY_R] = true; // 标记 R 键按下
@@ -300,9 +349,17 @@ static void ProcessInput(GLFWwindow* window)
         keys[GLFW_KEY_R] = false; // 标记 L 键释放
     }
 
-    float currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+	// 监听 H 键盘，打印帮助信息
+    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS && !keys[GLFW_KEY_H]) {
+        PrintKeyEvent(GLFW_KEY_H, "pressed");
+        keys[GLFW_KEY_H] = true; // 标记 H 键按下
+        PrintHelp();
+    }
+	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_RELEASE && keys[GLFW_KEY_H]) {
+		PrintKeyEvent(GLFW_KEY_H, "released");
+		keys[GLFW_KEY_H] = false; // 标记 H 键释放
+	}
+
     float camSpeed = static_cast<float>(CameraSpeed * deltaTime);
 
     if (isFreeMoveMode) {
@@ -310,6 +367,8 @@ static void ProcessInput(GLFWwindow* window)
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) camPos -= camSpeed * camFront;
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) camPos -= glm::normalize(glm::cross(camFront, camUp)) * camSpeed;
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) camPos += glm::normalize(glm::cross(camFront, camUp)) * camSpeed;
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) camPos += camSpeed * camUp;
+        if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) camPos -= camSpeed * camUp;
     }
 
     // 检查其他按键（遍历所有常见的按键）
@@ -433,26 +492,79 @@ static void DrawCube(const glm::vec3& color, float edgeLength, const glm::vec3& 
     glEnd();
 }
 
+static void DrawCylinder(const glm::vec3& color, const glm::vec3& center, const float radius, const float height, const int slices) {
+    float halfHeight = height / 2.0f;
+
+    glColor3f(color.x, color.y, color.z); // 设置颜色
+
+    // 绘制底部圆面
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(center.x, center.y - halfHeight, center.z); // 圆心
+    for (int i = 0; i <= slices; ++i) {
+        float angle = 2.0f * mathPI * i / slices;
+        float x = radius * cos(angle);
+        float z = radius * sin(angle);
+        glVertex3f(center.x + x, center.y - halfHeight, center.z + z);
+    }
+    glEnd();
+
+    // 绘制顶部圆面
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(center.x, center.y + halfHeight, center.z); // 圆心
+    for (int i = 0; i <= slices; ++i) {
+        float angle = 2.0f * mathPI * i / slices;
+        float x = radius * cos(angle);
+        float z = radius * sin(angle);
+        glVertex3f(center.x + x, center.y + halfHeight, center.z + z);
+    }
+    glEnd();
+
+    // 绘制侧面
+    glBegin(GL_QUAD_STRIP);
+    for (int i = 0; i <= slices; ++i) {
+        float angle = 2.0f * mathPI * i / slices;
+        float x = radius * cos(angle);
+        float z = radius * sin(angle);
+        glVertex3f(center.x + x, center.y - halfHeight, center.z + z); // 底部点
+        glVertex3f(center.x + x, center.y + halfHeight, center.z + z); // 顶部点
+    }
+    glEnd();
+}
+
+static void DrawPlane(const glm::vec3& color, const float width, const float height, const glm::vec3& center, const char plane) {
+    glColor3f(color.x, color.y, color.z); // 设置颜色
+
+    float halfWidth = width / 2.0f;
+    float halfHeight = height / 2.0f;
+
+    glBegin(GL_QUADS);
+
+    if (plane == 'x' || plane == 'X') { // 平面在 YZ 平面
+        glVertex3f(center.x, center.y - halfHeight, center.z - halfWidth); // 左下
+        glVertex3f(center.x, center.y - halfHeight, center.z + halfWidth); // 左上
+        glVertex3f(center.x, center.y + halfHeight, center.z + halfWidth); // 右上
+        glVertex3f(center.x, center.y + halfHeight, center.z - halfWidth); // 右下
+    }
+    else if (plane == 'y' || plane == 'Y') { // 平面在 ZX 平面
+        glVertex3f(center.x - halfWidth, center.y, center.z - halfHeight); // 左下
+        glVertex3f(center.x + halfWidth, center.y, center.z - halfHeight); // 右下
+        glVertex3f(center.x + halfWidth, center.y, center.z + halfHeight); // 右上
+        glVertex3f(center.x - halfWidth, center.y, center.z + halfHeight); // 左上
+    }
+    else { // 默认在 XY 平面
+        glVertex3f(center.x - halfWidth, center.y - halfHeight, center.z); // 左下
+        glVertex3f(center.x + halfWidth, center.y - halfHeight, center.z); // 右下
+        glVertex3f(center.x + halfWidth, center.y + halfHeight, center.z); // 右上
+        glVertex3f(center.x - halfWidth, center.y + halfHeight, center.z); // 左上
+    }
+
+    glEnd();
+}
+
+
 static void DrawFirefly() {
     // https://www.douyin.com/note/7388460523207134483
 	glm::vec3 Origin = glm::vec3(0.0f, 0.0f, 0.0f);
-	int Color_Firefly = 0xafe0d1;
-    int Color_cha = 0xc8cabd; // 9a9a8a
-	int Color_Black = 0x000000;
-	int Color_White = 0xffffff;
-    int Color_Gray = 0xf2f2ef;
-    int Color_Gray1 = 0xa9a798;
-	int Color_Orange = 0xd68c4c;
-    int Color_Orange1 = 0xc37f4e;
-    int Color_Brown = 0x423129;
-    int Color_Brown1 = 0x4a372b;
-	int Color_Brown2 = 0x998274;
-    int Color_Gold = 0xebd160;
-    int Color_Gold1 = 0xd3b157;
-    int Color_Pink = 0xfff1de; //e5d5c5
-    int Color_Pink1 = 0xffafc8;
-    int Color_IndigoBlue = 0x635ca2;
-    int Color_BlueGray = 0x71bbc8;
 
     // line1 done
     glm::vec3 Line1Origin = Origin;
@@ -5112,13 +5224,70 @@ static void DrawFirefly() {
 	// endline108
 } 
 
-static void DrawAll() {
-	//DrawUnitCube();
-	DrawFirefly();
+static void DrawBuildings() {
+    DrawCylinder(TransHEXtoVec3(Color_Gray1), glm::vec3(50.0f, 0.0f, 100.0f), 20, 50, 360);
 }
 
+static void DrawRoads() {
+    // 0.1f 不被地面遮挡
+    DrawPlane(TransHEXtoVec3(Color_White), 140.0f, 1.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-80.0f, 0.1f, 100.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 140.0f, 1.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 80.0f, 0.1f, 100.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 50.0f,  Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-10.0f, 0.1f, 125.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 50.0f,  Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 10.0f, 0.1f, 125.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 1.0f,   Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-10.0f, 0.1f, 100.0f), 'y'); // 修补残缺部分
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 1.0f,   Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 10.0f, 0.1f, 100.0f), 'y'); // 修补残缺部分
+
+    DrawPlane(TransHEXtoVec3(Color_White), 140.0f, 1.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-80.0f, 0.1f, 80.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 140.0f, 1.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 80.0f, 0.1f, 80.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 230.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-10.0f, 0.1f, -35.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 230.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 10.0f, 0.1f, -35.0f), 'y');
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 1.0f,   Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3(-10.0f, 0.1f, 80.0f), 'y'); // 修补残缺部分
+    DrawPlane(TransHEXtoVec3(Color_White), 1.0f, 1.0f,   Origin + glm::vec3(50.0f, 0.0f, 100.0f) + glm::vec3( 10.0f, 0.1f, 80.0f), 'y'); // 修补残缺部分
+}
+
+
+static void DrawAniCubeObj() {
+    // 动画物体的模型矩阵
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, animatedCube.position);                        // 平移
+    model = glm::rotate(model, glm::radians(animatedCube.rotation), glm::vec3(0.0f, 1.0f, 0.0f)); // 旋转
+    model = glm::scale(model, animatedCube.scale);                               // 缩放
+
+    // 加载模型矩阵
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix(); // 保存当前矩阵状态
+    glMultMatrixf(&model[0][0]);
+
+    // 绘制一个立方体
+    DrawCube(TransHEXtoVec3(Color_Gray1), 1.0f, glm::vec3(10.0f, 10.0f, 10.0f));
+
+    glPopMatrix(); // 恢复之前的矩阵状态
+}
+
+static void DrawAllStatic() {
+    DrawFirefly();
+	DrawPlane(TransHEXtoVec3(Color_Ground), 300.0f, 300.0f, Origin + glm::vec3(50.0f, 0.0f, 100.0f), 'y');
+
+    DrawRoads();
+
+    //DrawBuildings();
+}
+
+static void DrawAllAnimate() {
+    DrawAniCubeObj();
+}
+
+static void UpdateAnimation(float deltaTime) {
+    animatedCube.position.x = sin(glfwGetTime()) * 5.0f; // X 轴正弦运动
+    animatedCube.rotation += deltaTime * 50.0f;         // 每秒旋转 50 度
+    if (animatedCube.rotation > 360.0f) {
+        animatedCube.rotation -= 360.0f;
+    }
+}
+
+
 int main() {
-    std::cout << glfwGetVersionString() << std::endl;
+    PrintSystemInfo();
 
 	ResetParams();
 
@@ -5127,7 +5296,7 @@ int main() {
         return -1;
     }
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "3D Scene", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "GuestLiang 3D Scene - Firefly", nullptr, nullptr);
     if (window == NULL) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -5139,20 +5308,25 @@ int main() {
         glViewport(0, 0, width, height);
     });
 
-	glfwSetScrollCallback(window, ScrollCallback);            // 滚轮回调
-	glfwSetCursorPosCallback(window, MouseCallback);          // 鼠标移动回调
-	glfwSetMouseButtonCallback(window, MouseButtonCallback);  // 鼠标按键回调
+	glfwSetScrollCallback(window, ScrollCallback);              // 滚轮回调
+	glfwSetCursorPosCallback(window, MouseCallback);            // 鼠标移动回调
+	glfwSetMouseButtonCallback(window, MouseButtonCallback);    // 鼠标按键回调
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    glEnable(GL_DEPTH_TEST);                        // 启用深度测试，避免遮挡关系 
-                                                    // Enable depth testing for 3D rendering
+    glEnable(GL_DEPTH_TEST);                                    // 启用深度测试，避免遮挡关系
 
     while (!glfwWindowShouldClose(window)) {
-        ProcessInput(window);                       // 处理键盘输入
+        float currentFrame = glfwGetTime();
+        float deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        ProcessInput(window, deltaTime);                        // 处理键盘输入
+        UpdateAnimation(deltaTime);                             // 更新动画
+
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
         glm::mat4 view;
         if (isFreeMoveMode) {
@@ -5170,7 +5344,8 @@ int main() {
         glMatrixMode(GL_MODELVIEW);                 // 设置视图矩阵
         glLoadMatrixf(&view[0][0]);
 
-		DrawAll(); // 绘制
+		DrawAllStatic(); // 绘制静态物体
+		DrawAllAnimate(); // 绘制动画物体
 
         // 交换缓冲区，处理事件
         glfwSwapBuffers(window);
