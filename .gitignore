@@ -13,6 +13,7 @@ cw/includes/assimp
 cw/includes/freetype
 cw/includes/irrKlang
 cw/includes/*.h
+!cw/includes/stb_image.h
 cw/includes/*.c
 
 
