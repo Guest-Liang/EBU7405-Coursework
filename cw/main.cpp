@@ -13,6 +13,7 @@
 #include <sstream>
 #include <ctime>
 #include <chrono>
+#include <thread>
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE 0x809D
@@ -32,6 +33,8 @@ bool isDragging;                            // 记录是否正在拖拽
 bool isFreeMoveMode;                        // 切换摄像机模式
 bool firstMouse;                            // 是否是第一次移动鼠标
 bool keys[GLFW_KEY_LAST + 1] = { false };   // 记录所有按键的状态
+bool isFirstRun;                            // 是否第一次运行
+bool GuardrrailRotateFlag = true;           // 护栏旋转标志
 
 int lastX, lastY;                           // 上一次鼠标位置
 float camRadius;                            // 摄像机到固定模式的中心的距离
@@ -53,7 +56,7 @@ glm::vec3 Leftward  = glm::vec3(-1.0f,   0.0f,   0.0f);
 glm::vec3 Rightward = glm::vec3( 1.0f,   0.0f,   0.0f);
 glm::vec3 Forward   = glm::vec3( 0.0f,   0.0f,  -1.0f);
 glm::vec3 Backward  = glm::vec3( 0.0f,   0.0f,   1.0f);
-glm::vec3 PlaneOrigin = Origin + glm::vec3(50.0f, -0.5f, 100.0f);
+glm::vec3 PlaneOrigin = Origin + glm::vec3(50.0f, -0.5f, 149.5f);
 
 int Color_Firefly       = 0xafe0d1ff;
 int Color_cha           = 0xc8cabdff; // 9a9a8aff
@@ -63,6 +66,9 @@ int Color_Gray          = 0xf2f2efff;
 int Color_Gray1         = 0xa9a798ff;
 int Color_Gray_alpha    = 0xa9a798;
 int Color_Gray2         = 0x59544eff;
+int Color_Gray3         = 0xccccccff;
+int Color_Gray4         = 0x4f4d4eff;
+int Color_Green         = 0x7e987fff;
 int Color_Orange        = 0xd68c4cff;
 int Color_Orange1       = 0xc37f4eff;
 int Color_Brown         = 0x423129ff;
@@ -77,9 +83,43 @@ int Color_BlueGray      = 0x71bbc8ff;
 int Color_Ground        = 0x1f3341ff;
 int Color_Roof          = 0x66554bff;
 
+glm::vec3 GuardrailPositionArray[8] = {
+    glm::vec3(10.0f, 0.0f, 70.0f),
+    glm::vec3(-10.0f, 0.0f, 70.0f),
+    glm::vec3(-20.0f, 0.0f, 80.0f),
+    glm::vec3(-20.0f, 0.0f, 100.0f),
+    glm::vec3(-10.0f, 0.0f, 110.0f),
+    glm::vec3(10.0f, 0.0f, 110.0f),
+    glm::vec3(20.0f, 0.0f, 100.0f),
+    glm::vec3(20.0f, 0.0f, 80.0f),
+};
+
+glm::vec3 GuardrailRotationArray[8] = {
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(0.0f, 180.0f, 0.0f),
+    glm::vec3(0.0f, 90.0f, 0.0f),
+    glm::vec3(0.0f, 270.0f, 0.0f),
+    glm::vec3(0.0f, 180.0f, 0.0f),
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(0.0f, 270.0f, 0.0f),
+    glm::vec3(0.0f, 90.0f, 0.0f),
+};
+
+glm::vec3 GuardrailChangeArray[8] = {
+    glm::vec3(0.0f, 90.0f, 0.0f),
+    glm::vec3(0.0f, -90.0f, 0.0f),
+    glm::vec3(0.0f, 90.0f, 0.0f),
+    glm::vec3(0.0f, -90.0f, 0.0f),
+    glm::vec3(0.0f, 90.0f, 0.0f),
+    glm::vec3(0.0f, -90.0f, 0.0f),
+    glm::vec3(0.0f, 90.0f, 0.0f),
+    glm::vec3(0.0f, -90.0f, 0.0f),
+};
+
+
 struct AnimatedObject {
     glm::vec3 position{ 0.0f, 0.0f, 0.0f };
-    glm::vec3 rotation{ 0.0f, 0.0f, 0.0f };
+    glm::vec3 rotation{ 0.0f, 0.0f, 0.0f }; // 角度制，已在旋转中处理为弧度制
     glm::vec3 scale{ 1.0f, 1.0f, 1.0f };
     float alpha = 1.0f;
 
@@ -136,10 +176,10 @@ static GLuint LoadTexture(const char* filepath) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // 缩小纹理时的过滤模式，使用线性插值和mipmap插值
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // 放大纹理时的过滤模式，线性插值
 
-        std::cout << GetCurrentTimeString() << "Texture loaded: " << filepath << " (" << width << "x" << height << ")" << std::endl;
+        std::cout << GetCurrentTimeString() << " Texture loaded: " << filepath << " (" << width << "x" << height << ")" << std::endl;
     }
     else {
-        std::cerr << GetCurrentTimeString() << "Failed to load texture: " << filepath << std::endl;
+        std::cerr << GetCurrentTimeString() << " Failed to load texture: " << filepath << std::endl;
     }
     stbi_image_free(data); // 释放图片数据
 
@@ -212,8 +252,8 @@ static void PrintHelp() {
 }
 
 static void PrintSystemInfo() {
-    std::cout << GetCurrentTimeString() << "Program Running..." << std::endl;
-    std::cout << GetCurrentTimeString() << "GLFW Version: " << glfwGetVersionString() << std::endl;
+    std::cout << GetCurrentTimeString() << " Program Running..." << std::endl;
+    std::cout << GetCurrentTimeString() << " GLFW Version: " << glfwGetVersionString() << std::endl;
 }
 
 static void ResetParams()
@@ -227,13 +267,14 @@ static void ResetParams()
     isFreeMoveMode = true;                                              // 切换摄像机模式
     firstMouse = true;                                                  // 是否是第一次移动鼠标
     // keys[GLFW_KEY_LAST + 1] = { false };                             // 记录所有按键的状态
+	isFirstRun = true;                                                  // 是否是第一次运行
+    //GuardrrailRotateFlag;                                             // 护栏旋转标志
 
     lastX = 0, lastY = 0;                                               // 上一次鼠标位置
     camRadius = 200.0f;                                                 // 摄像机到固定模式的中心的距离
     //camPos = 10.0f * glm::vec3(-2.0f, 1.0f, 2.0f) + 80.0f * Upward;     // 存储摄像机的位置（x, y, z）
     camPos = glm::vec3(-100.436f, 109.194f, 257.340f);
     camFront = glm::normalize(glm::vec3(1.0f, -0.5f, -1.0f));           // 摄像机的前方向
-    //camFront = glm::normalize(glm::vec3(0.322f, -0.381f, -0.867f));
     camUp = glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f));                // 摄像机的上方向
     freeModePitch = glm::degrees(std::asin(camFront.y));                // freeModePitch 前方向y分量的反正弦值
     freeModeYaw = glm::degrees(std::atan2(-camFront.x, -camFront.z));   // freeModeYaw x,z平面的反正切值
@@ -433,9 +474,15 @@ static glm::vec4 TransHEXtoVec4WithAlpha(int hex) {
 
 
 
-GLuint Texture_Fuxuan;
+GLuint Texture_Fuxuan, Texture_LuminaSquare, Texture_QUALITYTEA, Texture_141, Texture_LSS, Texture_JC, Texture_CWGitHubLink;
 static void InitTextures() {
-    Texture_Fuxuan = LoadTexture("pic/fuxuan.jpg");
+    Texture_Fuxuan = LoadTexture("Texture/fuxuan.jpg");
+    Texture_LuminaSquare = LoadTexture("Texture/Texture_LuminaSquare.png");
+    Texture_QUALITYTEA = LoadTexture("Texture/Texture_QUALITYTEA.png");
+    Texture_141 = LoadTexture("Texture/Texture_141.png");
+    Texture_LSS = LoadTexture("Texture/Texture_LSS.png");
+    Texture_JC = LoadTexture("Texture/Texture_JC.png");
+    Texture_CWGitHubLink = LoadTexture("Texture/Texture_CWGitHubLink.png");
 }
 
 static void DrawTexturedCube(const glm::vec3& center, float edgeLength, GLuint textureID) {
@@ -488,35 +535,56 @@ static void DrawTexturedCube(const glm::vec3& center, float edgeLength, GLuint t
     glDisable(GL_TEXTURE_2D); // 关闭纹理映射
 }
 
-static void DrawTexturedPlane(const glm::vec3& center, float width, float height, GLuint textureID, const char plane) {
+static void DrawTexturedPlane(const glm::vec3& center, float width, float height, GLuint textureID, const glm::vec3& normal, bool flipTexture = false, bool rotateTexture90 = false) {
     float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
+
+    // 归一化法向量
+    glm::vec3 n = glm::normalize(normal);
+
+    // 找到一个与法向量不平行的向量，计算局部坐标系
+    glm::vec3 up = (fabs(n.x) < 0.99f) ? glm::vec3(1.0f, 0.0f, 0.0f) : glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 tangent = glm::normalize(glm::cross(up, n));
+    glm::vec3 bitangent = glm::cross(n, tangent);
 
     glEnable(GL_TEXTURE_2D); // 启用纹理映射
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     glBegin(GL_QUADS);
 
-    if (plane == 'x' || plane == 'X') { // YZ 平面
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(center.x, center.y - halfHeight, center.z - halfWidth);
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(center.x, center.y - halfHeight, center.z + halfWidth);
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(center.x, center.y + halfHeight, center.z + halfWidth);
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(center.x, center.y + halfHeight, center.z - halfWidth);
-    }
-    else if (plane == 'y' || plane == 'Y') { // XZ 平面
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(center.x - halfWidth, center.y, center.z - halfHeight);
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(center.x + halfWidth, center.y, center.z - halfHeight);
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(center.x + halfWidth, center.y, center.z + halfHeight);
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(center.x - halfWidth, center.y, center.z + halfHeight);
-    }
-    else if (plane == 'z' || plane == 'Z') { // XY 平面
-        glTexCoord2f(1.0f, 1.0f); glVertex3f(center.x - halfWidth, center.y - halfHeight, center.z);
-        glTexCoord2f(0.0f, 1.0f); glVertex3f(center.x + halfWidth, center.y - halfHeight, center.z);
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(center.x + halfWidth, center.y + halfHeight, center.z);
-        glTexCoord2f(1.0f, 0.0f); glVertex3f(center.x - halfWidth, center.y + halfHeight, center.z);
+    // 计算平面顶点
+    glm::vec3 v0 = center - halfWidth * tangent - halfHeight * bitangent; // 左下
+    glm::vec3 v1 = center + halfWidth * tangent - halfHeight * bitangent; // 右下
+    glm::vec3 v2 = center + halfWidth * tangent + halfHeight * bitangent; // 右上
+    glm::vec3 v3 = center - halfWidth * tangent + halfHeight * bitangent; // 左上
+
+    if (rotateTexture90) {
+        if (flipTexture) {
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(v0.x, v0.y, v0.z);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(v1.x, v1.y, v1.z);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f(v2.x, v2.y, v2.z);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(v3.x, v3.y, v3.z);
+        }
+        else {
+            glTexCoord2f(0.0f, 1.0f); glVertex3f(v0.x, v0.y, v0.z);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(v1.x, v1.y, v1.z);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(v2.x, v2.y, v2.z);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(v3.x, v3.y, v3.z);
+        }
     }
     else {
-        std::cerr << GetCurrentTimeString() << "Invalid plane parameter. Use 'x', 'y', or 'z'." << std::endl;
+        if (flipTexture) {
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(v0.x, v0.y, v0.z);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(v1.x, v1.y, v1.z);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(v2.x, v2.y, v2.z);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f(v3.x, v3.y, v3.z);
+        }
+        else {
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(v0.x, v0.y, v0.z);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f(v1.x, v1.y, v1.z);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(v2.x, v2.y, v2.z);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(v3.x, v3.y, v3.z);
+        }
     }
 
     glEnd();
@@ -618,101 +686,114 @@ static void DrawCube(const glm::vec4& color, float edgeLength, const glm::vec3& 
     glVertex3f(center.x + halfEdge, center.y - halfEdge, center.z + halfEdge);
 
     glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f); // 重置颜色为白色
 }
 
-static void DrawCylinder(const glm::vec4& color, const glm::vec3& center, float radius, float height, float startAngle, float endAngle, int segments, char plane) {
-    float startRad = glm::radians(startAngle);
+static void DrawCylinder(const glm::vec4& color, const glm::vec3& center, float radius, float height, const glm::vec3& normal, float startAngle, float endAngle, int segments) {
+    glm::vec3 n = glm::normalize(normal); // 归一化法向量
+
+    // 找到一个与法向量不平行的向量，计算局部坐标系
+    glm::vec3 up = (fabs(n.x) < 0.99f) ? glm::vec3(1.0f, 0.0f, 0.0f) : glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 tangent = glm::normalize(glm::cross(up, n));
+    glm::vec3 bitangent = glm::cross(n, tangent);
+
+    glColor4f(color.r, color.g, color.b, color.a); // 设置颜色
+
+    float startRad = glm::radians(startAngle); // 将角度转换为弧度
     float endRad = glm::radians(endAngle);
 
-    float deltaAngle = (endRad - startRad) / segments;
-
-    glColor4f(color.r, color.g, color.b, color.a);
+    float deltaAngle = (endRad - startRad) / segments; // 每个段的角度增量
 
     glBegin(GL_QUADS);
     for (int i = 0; i < segments; ++i) {
         float currentAngle = startRad + i * deltaAngle;
         float nextAngle = currentAngle + deltaAngle;
 
-        float x1, y1, z1, x2, y2, z2;
+        // 计算当前段和下一段的圆周顶点
+        glm::vec3 p1 = center + radius * (cos(currentAngle) * tangent + sin(currentAngle) * bitangent);
+        glm::vec3 p2 = center + radius * (cos(nextAngle) * tangent + sin(nextAngle) * bitangent);
 
-        if (plane == 'x' || plane == 'X') { // 绘制在 YZ 平面，切面为 YZ
-            x1 = center.x;
-            y1 = center.y + radius * cos(currentAngle);
-            z1 = center.z + radius * sin(currentAngle);
+        // 上圆和下圆顶点
+        glm::vec3 topP1 = p1 + n * height;
+        glm::vec3 topP2 = p2 + n * height;
 
-            x2 = center.x;
-            y2 = center.y + radius * cos(nextAngle);
-            z2 = center.z + radius * sin(nextAngle);
-
-            glVertex3f(center.x + height, y1, z1); // 顶点 1（高）
-            glVertex3f(center.x + height, y2, z2); // 顶点 2（高）
-            glVertex3f(center.x, y2, z2);          // 顶点 3（低）
-            glVertex3f(center.x, y1, z1);          // 顶点 4（低）
-        }
-        else if (plane == 'y' || plane == 'Y') { // 绘制在 XZ 平面，切面为 XZ
-            x1 = center.x + radius * cos(currentAngle);
-            y1 = center.y;
-            z1 = center.z + radius * sin(currentAngle);
-
-            x2 = center.x + radius * cos(nextAngle);
-            y2 = center.y;
-            z2 = center.z + radius * sin(nextAngle);
-
-            glVertex3f(x1, center.y + height, z1); // 顶点 1（高）
-            glVertex3f(x2, center.y + height, z2); // 顶点 2（高）
-            glVertex3f(x2, center.y, z2);          // 顶点 3（低）
-            glVertex3f(x1, center.y, z1);          // 顶点 4（低）
-        }
-        else if (plane == 'z' || plane == 'Z') { // 绘制在 XY 平面，切面为 XY
-            x1 = center.x + radius * cos(currentAngle);
-            y1 = center.y + radius * sin(currentAngle);
-            z1 = center.z;
-
-            x2 = center.x + radius * cos(nextAngle);
-            y2 = center.y + radius * sin(nextAngle);
-            z2 = center.z;
-
-            glVertex3f(x1, y1, center.z + height); // 顶点 1（高）
-            glVertex3f(x2, y2, center.z + height); // 顶点 2（高）
-            glVertex3f(x2, y2, center.z);          // 顶点 3（低）
-            glVertex3f(x1, y1, center.z);          // 顶点 4（低）
-        }
-        else {
-            std::cerr << "Invalid plane value. Use 'x', 'y', or 'z'." << std::endl;
-            break;
-        }
+        // 绘制侧面四边形
+        glVertex3f(p1.x, p1.y, p1.z);       // 底部当前点
+        glVertex3f(p2.x, p2.y, p2.z);       // 底部下一点
+        glVertex3f(topP2.x, topP2.y, topP2.z); // 顶部下一点
+        glVertex3f(topP1.x, topP1.y, topP1.z); // 顶部当前点
     }
     glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f); // 重置颜色为白色
 }
 
-static void DrawPlane(const glm::vec4& color, const float width, const float height, const glm::vec3& center, const char plane) {
-    glColor4f(color.x, color.y, color.z, color.a); // 设置颜色
+static void DrawCircle(const glm::vec4& color, const glm::vec3& center, float radius, const glm::vec3& normal,
+    float startAngle, float endAngle, int slices) {
+    glColor4f(color.r, color.g, color.b, color.a);
 
-    float halfWidth = width / 2.0f;
-    float halfHeight = height / 2.0f;
+    glm::vec3 n = glm::normalize(normal);
 
-    glBegin(GL_QUADS);
+    glm::vec3 up = (fabs(n.x) < 0.999f) ? glm::vec3(1.0f, 0.0f, 0.0f) : glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 tangent = glm::normalize(glm::cross(up, n));
+    glm::vec3 bitangent = glm::cross(n, tangent);
 
-    if (plane == 'x' || plane == 'X') { // 平面在 YZ 平面
-        glVertex3f(center.x, center.y - halfHeight, center.z - halfWidth); // 左下
-        glVertex3f(center.x, center.y - halfHeight, center.z + halfWidth); // 左上
-        glVertex3f(center.x, center.y + halfHeight, center.z + halfWidth); // 右上
-        glVertex3f(center.x, center.y + halfHeight, center.z - halfWidth); // 右下
-    }
-    else if (plane == 'y' || plane == 'Y') { // 平面在 ZX 平面
-        glVertex3f(center.x - halfWidth, center.y, center.z - halfHeight); // 左下
-        glVertex3f(center.x + halfWidth, center.y, center.z - halfHeight); // 右下
-        glVertex3f(center.x + halfWidth, center.y, center.z + halfHeight); // 右上
-        glVertex3f(center.x - halfWidth, center.y, center.z + halfHeight); // 左上
-    }
-    else { // 默认在 XY 平面
-        glVertex3f(center.x - halfWidth, center.y - halfHeight, center.z); // 左下
-        glVertex3f(center.x + halfWidth, center.y - halfHeight, center.z); // 右下
-        glVertex3f(center.x + halfWidth, center.y + halfHeight, center.z); // 右上
-        glVertex3f(center.x - halfWidth, center.y + halfHeight, center.z); // 左上
+    float startRad = glm::radians(startAngle);
+    float endRad = glm::radians(endAngle);
+
+    float deltaAngle = (endRad - startRad) / slices;
+
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(center.x, center.y, center.z);
+
+    for (int i = 0; i <= slices; ++i) {
+        float currentAngle = startRad + i * deltaAngle;
+        glm::vec3 point = center + radius * (cos(currentAngle) * tangent + sin(currentAngle) * bitangent);
+        glVertex3f(point.x, point.y, point.z);
     }
 
     glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+static void DrawPlane(const glm::vec4& color, const float width, const float height, const glm::vec3& center, const glm::vec3& normal) {
+    glColor4f(color.x, color.y, color.z, color.a);
+
+    glm::vec3 n = glm::normalize(normal); // 归一化法向量
+
+    // 找到一个与法向量不平行的向量，计算第一个基向量
+    glm::vec3 up = (fabs(n.x) < 0.999f) ? glm::vec3(1.0f, 0.0f, 0.0f) : glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 tangent = glm::normalize(glm::cross(up, n)); // 平面上的第一个基向量
+    glm::vec3 bitangent = glm::cross(n, tangent);          // 平面上的第二个基向量
+
+    // 计算平面顶点
+    glm::vec3 halfTangent = tangent * (width / 2.0f);
+    glm::vec3 halfBitangent = bitangent * (height / 2.0f);
+
+    glm::vec3 v0 = center - halfTangent - halfBitangent; // 左下
+    glm::vec3 v1 = center + halfTangent - halfBitangent; // 右下
+    glm::vec3 v2 = center + halfTangent + halfBitangent; // 右上
+    glm::vec3 v3 = center - halfTangent + halfBitangent; // 左上
+
+    // 绘制平面
+    glBegin(GL_QUADS);
+    glVertex3f(v0.x, v0.y, v0.z);
+    glVertex3f(v1.x, v1.y, v1.z);
+    glVertex3f(v2.x, v2.y, v2.z);
+    glVertex3f(v3.x, v3.y, v3.z);
+    glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f); // 重置颜色为白色
+}
+
+static void DrawTriangle(const glm::vec4& color, const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2) {
+    glColor4f(color.x, color.y, color.z, color.a);
+
+    glBegin(GL_TRIANGLES);
+    glVertex3f(p0.x, p0.y, p0.z);
+    glVertex3f(p1.x, p1.y, p1.z);
+    glVertex3f(p2.x, p2.y, p2.z);
+    glEnd();
+   
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f); // 重置颜色为白色
 }
 
 static void DrawCubeLWH(const glm::vec4& color, const float length, const float width, const float height, const glm::vec3& center) {
@@ -722,27 +803,27 @@ static void DrawCubeLWH(const glm::vec4& color, const float length, const float 
 
     // 正面（XY 平面）
     glm::vec3 frontCenter = glm::vec3(center.x, center.y, center.z + halfLength);
-    DrawPlane(color, width, height, frontCenter, 'z');
+    DrawPlane(color, width, height, frontCenter, Backward);
 
     // 背面（XY 平面）
     glm::vec3 backCenter = glm::vec3(center.x, center.y, center.z - halfLength);
-    DrawPlane(color, width, height, backCenter, 'z');
+    DrawPlane(color, width, height, backCenter, Backward);
 
     // 顶面（XZ 平面）
     glm::vec3 topCenter = glm::vec3(center.x, center.y + halfHeight, center.z);
-    DrawPlane(color, length, width, topCenter, 'y');
+    DrawPlane(color, length, width, topCenter, Upward);
 
     // 底面（XZ 平面）
     glm::vec3 bottomCenter = glm::vec3(center.x, center.y - halfHeight, center.z);
-    DrawPlane(color, length, width, bottomCenter, 'y');
+    DrawPlane(color, length, width, bottomCenter, Upward);
 
     // 左面（YZ 平面）
     glm::vec3 leftCenter = glm::vec3(center.x - halfWidth, center.y, center.z);
-    DrawPlane(color, length, height, leftCenter, 'x');
+    DrawPlane(color, length, height, leftCenter, Rightward);
 
     // 右面（YZ 平面）
     glm::vec3 rightCenter = glm::vec3(center.x + halfWidth, center.y, center.z);
-    DrawPlane(color, length, height, rightCenter, 'x');
+    DrawPlane(color, length, height, rightCenter, Rightward);
 }
 
 
@@ -5410,146 +5491,251 @@ static void DrawFirefly() {
 } 
 
 static void DrawBuildings() {
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 110.0f, 30.0f, PlaneOrigin + glm::vec3(-95.0f, 15.0f, 70.0f), 'z');
-    DrawCylinder(TransHEXtoVec4WithAlpha(Color_cha), PlaneOrigin + glm::vec3(-40.0f, 0.0f, 50.0f), 20, 30, 0, 90, 360, 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 110.0f, 30.0f, PlaneOrigin + glm::vec3(-20.0f, 15.0f, -5.0f), 'x');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 130.0f, 30.0f, PlaneOrigin + glm::vec3(-150.0f, 15.0f, 5.0f), 'x');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 130.0f, 30.0f, PlaneOrigin + glm::vec3(-85.0f, 15.0f, -60.0f), 'z');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 130.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 30.0f, 5.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 130.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 40.0f, 5.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 130.0f, 10.0f, PlaneOrigin + glm::vec3(-85.0f, 35.0f, 70.0f), 'z');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 130.0f, 10.0f, PlaneOrigin + glm::vec3(-85.0f, 35.0f, -60.0f), 'z');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 130.0f, 10.0f, PlaneOrigin + glm::vec3(-150.0f, 35.0f, 5.0f), 'x');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 130.0f, 10.0f, PlaneOrigin + glm::vec3(-20.0f, 35.0f, 5.0f), 'x'); 
+    // Lumina Square
+    {
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 30.0f, 110.0f, PlaneOrigin + glm::vec3(-95.0f, 15.0f, 70.0f), Backward);
+        DrawCylinder(TransHEXtoVec4WithAlpha(Color_cha), PlaneOrigin + glm::vec3(-40.0f, 0.0f, 50.0f), 20, 30, Upward, 0, 90, 360);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 110.0f, 30.0f, PlaneOrigin + glm::vec3(-20.0f, 15.0f, -5.0f), Rightward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 130.0f, 30.0f, PlaneOrigin + glm::vec3(-150.0f, 15.0f, 5.0f), Rightward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 30.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 15.0f, -60.0f), Backward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 130.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 30.0f, 5.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 130.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 40.0f, 5.0f), Upward);
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(-85.0f, 35.0f, 70.0f), 10.0f, 130.0f, Texture_LuminaSquare, Forward, false, true);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 10.0f, 130.0f, PlaneOrigin + glm::vec3(-85.0f, 35.0f, -60.0f), Backward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray2), 130.0f, 10.0f, PlaneOrigin + glm::vec3(-150.0f, 35.0f, 5.0f), Rightward);
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(-20.0f, 35.0f, 5.0f),  130.0f, 10.0f, Texture_LuminaSquare, Leftward, false, false);
+    }
+    // end Lumina Square
 
-    DrawCubeLWH(TransHEXtoVec4WithAlpha(Color_Gray1), 10.0f, 10.0f, 10.0f, PlaneOrigin + glm::vec3(-25.0f, 5.0f, 125.0f));
-    DrawCubeLWH(TransHEXtoVec4WithAlpha(Color_Roof), 15.0f, 15.0f, 2.0f, PlaneOrigin + glm::vec3(-25.0f, 11.0f, 125.0f));
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Black), 8.0f, 7.0f, PlaneOrigin + glm::vec3(-25.0f, 3.5f, 119.9f), 'z');
+    // QUALITY TEA
+    {
+        DrawCubeLWH(TransHEXtoVec4WithAlpha(Color_Gray1), 10.0f, 10.0f, 10.0f, PlaneOrigin + glm::vec3(-25.0f, 5.0f, 125.0f));
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 15.0f, 15.0f, PlaneOrigin + glm::vec3(-25.0f, 10.0f, 125.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 15.0f, 15.0f, PlaneOrigin + glm::vec3(-25.0f, 12.0f, 125.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 15.0f, 2.0f,  PlaneOrigin + glm::vec3(-17.5f, 11.0f, 125.0f), Rightward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 15.0f, 2.0f,  PlaneOrigin + glm::vec3(-32.5f, 11.0f, 125.0f), Rightward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Roof), 2.0f, 15.0f,  PlaneOrigin + glm::vec3(-25.0f, 11.0f, 132.5f), Backward);
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(-25.0f, 11.0f, 117.5f), 2.0f, 15.0f, Texture_QUALITYTEA, Backward, true, true);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Black), 7.0f, 8.0f, PlaneOrigin + glm::vec3(-25.0f, 3.5f, 119.9f), Backward);
+    }
+    // end QUALITY TEA
 
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 20.0f, 40.0f, PlaneOrigin + glm::vec3(-30.0f, 50.0f, 60.0f), Rightward + Backward);
 
+    // 141,LSS,JC
+    {
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 35.0f, 10.0f, PlaneOrigin + glm::vec3(20.0f, 5.0f, 132.5f), Leftward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 10.0f, 40.0f, PlaneOrigin + glm::vec3(40.0f, 5.0f, 115.0f), Backward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 10.0f, 14.142f, PlaneOrigin + glm::vec3(65.0f, 5.0f, 110.0f), Forward + Leftward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 10.0f, 20.0f, PlaneOrigin + glm::vec3(80.0f, 5.0f, 105.0f), Backward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 45.0f, 10.0f, PlaneOrigin + glm::vec3(90.0f, 5.0f, 127.5f), Leftward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 10.0f, 70.0f, PlaneOrigin + glm::vec3(55.0f, 5.0f, 150.0f), Backward);
+
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 35.0f, 70.0f, PlaneOrigin + glm::vec3(55.0f, 10.0f, 132.5f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray1), 10.0f, 20.0f, PlaneOrigin + glm::vec3(80.0f, 10.0f, 110.0f), Upward);
+        DrawTriangle(TransHEXtoVec4WithAlpha(Color_Gray1),
+            PlaneOrigin + glm::vec3(60.0f, 10.0f, 115.0f), 
+            PlaneOrigin + glm::vec3(70.0f, 10.0f, 115.0f), 
+            PlaneOrigin + glm::vec3(70.0f, 10.0f, 105.0f));
+
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Black), 8.0f, 11.314f, PlaneOrigin + glm::vec3(64.95f, 4.0f, 110.0f), Forward + Leftward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray4), 8.0f, 18.0f, PlaneOrigin + glm::vec3(80.0f, 4.0f, 104.9f), Backward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray4), 8.0f, 38.0f, PlaneOrigin + glm::vec3(40.0f, 4.0f, 114.9f), Backward);
+
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(40.0f, 11.0f, 115.0f), 2.0f, 38.0f, Texture_141, Backward, true, true);
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(65.0f, 11.0f, 110.0f), 2.0f, 14.141f, Texture_LSS, Backward + Rightward, true, true);
+        DrawTexturedPlane(PlaneOrigin + glm::vec3(80.0f, 11.0f, 105.0f), 2.0f, 18.0f, Texture_JC, Backward, true, true);
+    }
+    // end 141,LSS,JC
 }
 
 static void DrawRoads() {
     // 0.1f 不被地面遮挡
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 140.0f, 1.0f, PlaneOrigin + glm::vec3(-80.0f, 0.1f, 100.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 140.0f, 1.0f, PlaneOrigin + glm::vec3( 80.0f, 0.1f, 100.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 50.0f,  PlaneOrigin + glm::vec3(-10.0f, 0.1f, 125.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 50.0f,  PlaneOrigin + glm::vec3( 10.0f, 0.1f, 125.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3(-10.0f, 0.1f, 100.0f), 'y'); // 修补残缺部分
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3( 10.0f, 0.1f, 100.0f), 'y'); // 修补残缺部分
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 140.0f, PlaneOrigin + glm::vec3(-80.0f, 0.1f, 100.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 140.0f, PlaneOrigin + glm::vec3( 80.0f, 0.1f, 100.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 50.0f, 1.0f,  PlaneOrigin + glm::vec3(-10.0f, 0.1f, 125.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 50.0f, 1.0f,  PlaneOrigin + glm::vec3( 10.0f, 0.1f, 125.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3(-10.0f, 0.1f, 100.0f), Upward); // 修补残缺部分
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3( 10.0f, 0.1f, 100.0f), Upward); // 修补残缺部分
 
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 140.0f, 1.0f, PlaneOrigin + glm::vec3(-80.0f, 0.1f, 80.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 140.0f, 1.0f, PlaneOrigin + glm::vec3( 80.0f, 0.1f, 80.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 230.0f, PlaneOrigin + glm::vec3(-10.0f, 0.1f, -35.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 230.0f, PlaneOrigin + glm::vec3( 10.0f, 0.1f, -35.0f), 'y');
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3(-10.0f, 0.1f, 80.0f), 'y'); // 修补残缺部分
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3( 10.0f, 0.1f, 80.0f), 'y'); // 修补残缺部分
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 140.0f, PlaneOrigin + glm::vec3(-80.0f, 0.1f, 80.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 140.0f, PlaneOrigin + glm::vec3( 80.0f, 0.1f, 80.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 230.0f, 1.0f, PlaneOrigin + glm::vec3(-10.0f, 0.1f, -35.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 230.0f, 1.0f, PlaneOrigin + glm::vec3( 10.0f, 0.1f, -35.0f), Upward);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3(-10.0f, 0.1f, 80.0f), Upward); // 修补残缺部分
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 1.0f,   PlaneOrigin + glm::vec3( 10.0f, 0.1f, 80.0f), Upward); // 修补残缺部分
 
     // 斑马线crosswalk
     {
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-7.0f, 0.1f, 75.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-4.0f, 0.1f, 75.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-1.0f, 0.1f, 75.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 2.0f, 0.1f, 75.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 5.0f, 0.1f, 75.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 8.0f, 0.1f, 75.0f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-7.0f, 0.1f, 75.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-4.0f, 0.1f, 75.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-1.0f, 0.1f, 75.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 2.0f, 0.1f, 75.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 5.0f, 0.1f, 75.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 8.0f, 0.1f, 75.0f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-8.0f, 0.1f, 105.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-5.0f, 0.1f, 105.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-2.0f, 0.1f, 105.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 1.0f, 0.1f, 105.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 4.0f, 0.1f, 105.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 7.0f, 0.1f, 105.0f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-8.0f, 0.1f, 105.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-5.0f, 0.1f, 105.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-2.0f, 0.1f, 105.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 1.0f, 0.1f, 105.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 4.0f, 0.1f, 105.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 7.0f, 0.1f, 105.0f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 82.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 85.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 88.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 91.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 94.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 97.0f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 82.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 85.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 88.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 91.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 94.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-15.0f, 0.1f, 97.0f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 83.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 86.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 89.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 92.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 95.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 98.0f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 83.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 86.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 89.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 92.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 95.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 15.0f, 0.1f, 98.0f), Upward);
     }
     //end斑马线crosswalk
 
     //双黄+停止线
     {
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 215.0f, PlaneOrigin + glm::vec3(-0.35f, 0.1f, -42.5f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 215.0f, PlaneOrigin + glm::vec3( 0.35f, 0.1f, -42.5f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 215.0f, 0.3f, PlaneOrigin + glm::vec3(-0.35f, 0.1f, -42.5f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 215.0f, 0.3f, PlaneOrigin + glm::vec3( 0.35f, 0.1f, -42.5f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 35.0f, PlaneOrigin + glm::vec3(-0.35f, 0.1f, 132.5f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 35.0f, PlaneOrigin + glm::vec3( 0.35f, 0.1f, 132.5f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 35.0f, 0.3f, PlaneOrigin + glm::vec3(-0.35f, 0.1f, 132.5f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 35.0f, 0.3f, PlaneOrigin + glm::vec3( 0.35f, 0.1f, 132.5f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 125.0f, 0.3f, PlaneOrigin + glm::vec3(-87.5f, 0.1f, 89.65f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 125.0f, 0.3f, PlaneOrigin + glm::vec3(-87.5f, 0.1f, 90.35f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 125.0f, PlaneOrigin + glm::vec3(-87.5f, 0.1f, 89.65f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 125.0f, PlaneOrigin + glm::vec3(-87.5f, 0.1f, 90.35f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 125.0f, 0.3f, PlaneOrigin + glm::vec3(87.5f, 0.1f, 89.65f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 125.0f, 0.3f, PlaneOrigin + glm::vec3(87.5f, 0.1f, 90.35f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 125.0f, PlaneOrigin + glm::vec3(87.5f, 0.1f, 89.65f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_Gold), 0.3f, 125.0f, PlaneOrigin + glm::vec3(87.5f, 0.1f, 90.35f), Upward);
 
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-5.0f, 0.1f, 65.5f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 5.0f, 0.1f, 114.5f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-24.5f, 0.1f, 95.0f), 'y');
-        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 24.5f, 0.1f, 85.0f), 'y');
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3(-5.0f, 0.1f, 65.5f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 1.0f, 10.0f, PlaneOrigin + glm::vec3( 5.0f, 0.1f, 114.5f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3(-24.5f, 0.1f, 95.0f), Upward);
+        DrawPlane(TransHEXtoVec4WithAlpha(Color_White), 10.0f, 1.0f, PlaneOrigin + glm::vec3( 24.5f, 0.1f, 85.0f), Upward);
     }
     //end双黄+停止线
 }
 
 static void DrawAllStatic() {
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Ground), 300.0f, 300.0f, PlaneOrigin, 'y');
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_Ground), 300.0f, 300.0f, PlaneOrigin, Upward); // 地板
     DrawFirefly();
-
     DrawRoads();
-
-    //DrawTexturedCube(PlaneOrigin + glm::vec3(10.0f, 10.0f, 10.0f), 5.0f, Texture_Fuxuan); // 绘制贴图立方体
-	DrawTexturedPlane(PlaneOrigin + glm::vec3(10.0f, 10.0f, 10.0f), 5.0f, 5.0f, Texture_Fuxuan, 'x'); // 绘制贴图平面
-	DrawTexturedPlane(PlaneOrigin + glm::vec3(15.0f, 15.0f, 15.0f), 5.0f, 5.0f, Texture_Fuxuan, 'z'); // 绘制贴图平面
-	DrawTexturedPlane(PlaneOrigin + glm::vec3(20.0f, 20.0f, 20.0f), 5.0f, 5.0f, Texture_Fuxuan, 'y'); // 绘制贴图平面
-
     DrawBuildings();
 }
 
 
 
-AnimatedObject obj;
+AnimatedObject obj, GuardrailProps[8];
 static void DrawAniCubeObj() {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, obj.position); // 平移
 
     // 旋转：先绕 X 轴，后绕 Y 轴，最后绕 Z 轴
-    model = glm::rotate(model, glm::radians(obj.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕 X 轴旋转
-    model = glm::rotate(model, glm::radians(obj.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕 Y 轴旋转
-    model = glm::rotate(model, glm::radians(obj.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)); // 绕 Z 轴旋转
+    model = glm::rotate(model, glm::radians(obj.rotation.x), Rightward); // 绕 X 轴旋转
+    model = glm::rotate(model, glm::radians(obj.rotation.y), Upward); // 绕 Y 轴旋转
+    model = glm::rotate(model, glm::radians(obj.rotation.z), Backward); // 绕 Z 轴旋转
     model = glm::scale(model, obj.scale); // 缩放
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glMultMatrixf(&model[0][0]);
 
-    DrawCube(TransHEXtoVec4WithSeparateAlpha(Color_Gray1, obj.alpha), 1.0f, glm::vec3(10.0f, 10.0f, 10.0f));
+    glPushAttrib(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(1.0f, 1.0f, 1.0f, obj.alpha);
 
-    glPopMatrix(); // 恢复之前的矩阵状态
+    DrawTexturedCube(glm::vec3(97.0f, 85.0f, 0.0f), 0.2f, Texture_CWGitHubLink);
+
+    glPopAttrib(); // 恢复之前状态
+    glPopMatrix();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
+
+static void DrawSingleGuardrail(const AnimatedObject& obj, const glm::vec3& rotationCenter) {
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, rotationCenter);
+    model = glm::rotate(model, glm::radians(obj.rotation.y), Upward);
+
+    model = glm::translate(model, obj.position - rotationCenter);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(&model[0][0]);
+
+    // 绘制护栏
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin, 0.5f, 3.0f, Upward, 0.0f, 360.0f, 360);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin + 3.0f * Upward, 0.5f, Upward, 0.0f, 360.0f, 360);
+    DrawPlane(TransHEXtoVec4WithAlpha(Color_IndigoBlue), 2.5f, 8.0f, PlaneOrigin + 1.5f * Upward + 4.0f * Leftward, Forward);
+
+    glPopMatrix();
+}
+
+static void DrawAniGuardrails() {
+    for (int i = 0; i < 8; i++) {
+        if (isFirstRun) {
+            GuardrailProps[i].position = GuardrailPositionArray[i];
+            GuardrailProps[i].rotation = GuardrailRotationArray[i];
+            GuardrailProps[i].scale = glm::vec3(1.0f, 1.0f, 1.0f);
+            GuardrailProps[i].alpha = 1.0f;
+        }
+        else {
+            break;
+        }
+    }
+	isFirstRun = false;
+    for (int i = 0; i < 8; i++) {
+        DrawSingleGuardrail(GuardrailProps[i], PlaneOrigin + GuardrailPositionArray[i]);
+    }
+}
+
 
 static void DrawAllAnimate() {
     DrawAniCubeObj();
+    DrawAniGuardrails();
 }
 
-void UpdateAnimation(float deltaTime) {
-    static float time = 0.0f;
+static void UpdateAnimation(float deltaTime) {
+    static float time = 0.0f;           // 时间累加器，用于周期性效果
+    static float rotationTimer = 0.0f; // 控制旋转间隔
+    static int currentStep = 0;        // 当前旋转步数
+    static bool isAnimating = false;  // 标志是否正在执行动画
+    static const float Slice = 180.0f; // 分片数，控制动画的平滑程度
+
     time += deltaTime;
 
     // 使用正弦函数周期性地改变透明度 (0 ~ 1)
     obj.alpha = (sin(time * 2.0f) + 1.0f) / 2.0f;
 
-    // 其他动画更新逻辑...
-    //obj.position.x = sin(time) * 5.0f;  // 平移
-    obj.rotation.y += deltaTime * 50.0f; // 旋转
+    // 如果正在动画中
+    if (isAnimating) {
+        if (currentStep < Slice) {
+            for (int i = 0; i < 8; i++) {
+                float rotationDelta = GuardrailChangeArray[i].y / Slice; // 每帧旋转量
+                GuardrailProps[i].rotation.y += GuardrrailRotateFlag ? rotationDelta : -rotationDelta;
+            }
+            currentStep++;
+        }
+        else {
+            // 动画完成，重置状态
+            isAnimating = false;
+            currentStep = 0;
+            GuardrrailRotateFlag = !GuardrrailRotateFlag; // 切换方向
+        }
+    }
+    else {
+        rotationTimer += deltaTime;
+        if (rotationTimer >= 2.0f) {
+            isAnimating = true;
+            rotationTimer -= 2.0f;
+        }
+    }
 }
+
 
 
 int main() {
@@ -5558,13 +5744,13 @@ int main() {
 	ResetParams();
 
     if (!glfwInit()) {
-        std::cerr << GetCurrentTimeString() << "Failed to initialize GLFW" << std::endl;
+        std::cerr << GetCurrentTimeString() << " Failed to initialize GLFW" << std::endl;
         return -1;
     }
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "GuestLiang 3D Scene - Firefly", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "GuestLiang 3D Scene - Firefly + Lumina Square", nullptr, nullptr);
     if (window == NULL) {
-        std::cerr << GetCurrentTimeString() << "Failed to create GLFW window" << std::endl;
+        std::cerr << GetCurrentTimeString() << " Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
@@ -5579,7 +5765,7 @@ int main() {
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);    // 鼠标按键回调
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << GetCurrentTimeString() << "Failed to initialize GLAD" << std::endl;
+        std::cerr << GetCurrentTimeString() << " Failed to initialize GLAD" << std::endl;
         return -1;
     }
 

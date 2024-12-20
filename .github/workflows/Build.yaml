@@ -91,13 +91,22 @@ jobs:
         echo "VERSION=$VERSION" >> $GITHUB_ENV
         export VERSION
 
+    - name: Get Latest Commit Message
+      id: get_commit_message
+      run: |
+        LATEST_COMMIT=$(git log -1 --pretty=format:"%h - %s (%an)")
+        echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
+        export LATEST_COMMIT
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       with:
         tag_name: "v${{ env.VERSION }}"
         release_name: "OpenGL Coursework v${{ env.VERSION }}"
-        body: ""
+        body: |
+          ## The commit message that trigger this release.
+          ${{ env.LATEST_COMMIT }}
         draft: true
         prerelease: false
       env:
