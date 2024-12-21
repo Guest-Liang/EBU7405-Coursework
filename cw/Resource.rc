@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,1,5
- PRODUCTVERSION 1,0,2,0
+ FILEVERSION 1,0,1,10
+ PRODUCTVERSION 1,0,3,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,12 +69,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Guest Liang"
             VALUE "FileDescription", "OpenGL Coursework, https://github.com/Guest-Liang/EBU7405-Coursework"
-            VALUE "FileVersion", "1.0.1.5"
+            VALUE "FileVersion", "1.0.1.10"
             VALUE "InternalName", "GuestLiangOpenGLcw.exe"
             VALUE "LegalCopyright", "Copyright (C) 2024 GuestLiang"
             VALUE "OriginalFilename", "GuestLiangOpenGLcw.exe"
             VALUE "ProductName", "Guest Liang OpenGL Coursework"
-            VALUE "ProductVersion", "1.0.2.0"
+            VALUE "ProductVersion", "1.0.3.0"
         END
     END
     BLOCK "VarFileInfo"

@@ -33,8 +33,7 @@ bool isDragging;                            // 记录是否正在拖拽
 bool isFreeMoveMode;                        // 切换摄像机模式
 bool firstMouse;                            // 是否是第一次移动鼠标
 bool keys[GLFW_KEY_LAST + 1] = { false };   // 记录所有按键的状态
-bool isFirstRun;                            // 是否第一次运行
-bool GuardrrailRotateFlag = true;           // 护栏旋转标志
+bool isFirstRun = true;                     // 是否第一次运行
 
 int lastX, lastY;                           // 上一次鼠标位置
 float camRadius;                            // 摄像机到固定模式的中心的距离
@@ -82,6 +81,7 @@ int Color_IndigoBlue    = 0x635ca2ff;
 int Color_BlueGray      = 0x71bbc8ff;
 int Color_Ground        = 0x1f3341ff;
 int Color_Roof          = 0x66554bff;
+int Color_PinkRed       = 0xcd7971ff;
 
 glm::vec3 GuardrailPositionArray[8] = {
     glm::vec3(10.0f, 0.0f, 70.0f),
@@ -116,15 +116,31 @@ glm::vec3 GuardrailChangeArray[8] = {
     glm::vec3(0.0f, -90.0f, 0.0f),
 };
 
+int CurrentADFrame = 0;
 
 struct AnimatedObject {
     glm::vec3 position{ 0.0f, 0.0f, 0.0f };
     glm::vec3 rotation{ 0.0f, 0.0f, 0.0f }; // 角度制，已在旋转中处理为弧度制
     glm::vec3 scale{ 1.0f, 1.0f, 1.0f };
+    glm::vec3 direction = Leftward;
+    float speed = 1.0f; // 暂定每秒一个单位
     float alpha = 1.0f;
+    float RotateSpeed = 1.0f;
 
     AnimatedObject() = default;
 };
+
+AnimatedObject obj, GuardrailProps[8], Vehicle_S, HHand, MHand, SHand;
+
+struct GuardrailState {
+    bool isAnimating = false;       // 是否正在动画
+    int currentStep = 0;            // 当前步骤
+    float rotationTimer = 0.0f;     // 动画计时器
+    bool RotateFlag = true;         // 栏杆当前旋转标记
+
+	GuardrailState() = default;
+};
+GuardrailState guardrailState;
 
 //-------------Configuration----------------
 static std::string GetCurrentTimeString()
@@ -157,6 +173,37 @@ static std::string GetCurrentTimeString()
         << "]";
 
     return oss.str();
+}
+
+static void GetClockHandAngles(float& hourAngle, float& minuteAngle, float& secondAngle) {
+    auto now = std::chrono::system_clock::now();
+    auto now_time_t = std::chrono::system_clock::to_time_t(now);
+
+    struct tm tm_info;
+
+#if defined(_MSC_VER) || defined(__MINGW32__) // Windows 平台
+    if (localtime_s(&tm_info, &now_time_t) != 0) {
+        std::cerr << "Failed to get local time." << std::endl;
+        hourAngle = minuteAngle = secondAngle = 0.0f;
+        return;
+    }
+#else // Linux/Unix 平台
+    if (localtime_r(&now_time_t, &tm_info) == nullptr) {
+        std::cerr << "Failed to get local time." << std::endl;
+        hourAngle = minuteAngle = secondAngle = 0.0f;
+        return;
+    }
+#endif
+
+    // 获取当前时间
+    int hours = tm_info.tm_hour % 12;  // 12小时制
+    int minutes = tm_info.tm_min;
+    int seconds = tm_info.tm_sec;
+
+    // 计算角度
+    hourAngle = (hours + minutes / 60.0f) * 30.0f;       // 时针：每小时30度，每分钟0.5度
+    minuteAngle = (minutes + seconds / 60.0f) * 6.0f;    // 分针：每分钟6度，每秒0.1度
+    secondAngle = seconds * 6.0f;                        // 秒针：每秒6度
 }
 
 static GLuint LoadTexture(const char* filepath) {
@@ -268,7 +315,6 @@ static void ResetParams()
     firstMouse = true;                                                  // 是否是第一次移动鼠标
     // keys[GLFW_KEY_LAST + 1] = { false };                             // 记录所有按键的状态
 	isFirstRun = true;                                                  // 是否是第一次运行
-    //GuardrrailRotateFlag;                                             // 护栏旋转标志
 
     lastX = 0, lastY = 0;                                               // 上一次鼠标位置
     camRadius = 200.0f;                                                 // 摄像机到固定模式的中心的距离
@@ -289,6 +335,27 @@ static void ResetParams()
                   camRadius * sin(glm::radians(fixedYaw)) * cos(glm::radians(fixedPitch))),
         PlaneOrigin,
         camUp);
+
+
+
+    // 其他变量初始化
+	guardrailState = GuardrailState();
+
+    obj = AnimatedObject();
+    Vehicle_S = AnimatedObject();
+    HHand = AnimatedObject();
+    MHand = AnimatedObject();
+    SHand = AnimatedObject();
+    for (int i = 0; i < 8; ++i) {
+        GuardrailProps[i] = AnimatedObject();
+        GuardrailProps[i].position = GuardrailPositionArray[i];
+        GuardrailProps[i].rotation = GuardrailRotationArray[i];
+    }
+    SHand.RotateSpeed = 6.0f;
+    MHand.RotateSpeed = 0.1f;
+    HHand.RotateSpeed = 0.00833333f;
+
+    GetClockHandAngles(HHand.rotation.x, MHand.rotation.x, SHand.rotation.x);
 }
 
 static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
@@ -474,7 +541,10 @@ static glm::vec4 TransHEXtoVec4WithAlpha(int hex) {
 
 
 
-GLuint Texture_Fuxuan, Texture_LuminaSquare, Texture_QUALITYTEA, Texture_141, Texture_LSS, Texture_JC, Texture_CWGitHubLink;
+GLuint Texture_Fuxuan, Texture_LuminaSquare, Texture_QUALITYTEA, 
+Texture_141, Texture_LSS, Texture_JC, 
+Texture_CWGitHubLink, Texture_Banner, Texture_Clock,
+Texture_AD, AD[45];
 static void InitTextures() {
     Texture_Fuxuan = LoadTexture("Texture/fuxuan.jpg");
     Texture_LuminaSquare = LoadTexture("Texture/Texture_LuminaSquare.png");
@@ -483,6 +553,16 @@ static void InitTextures() {
     Texture_LSS = LoadTexture("Texture/Texture_LSS.png");
     Texture_JC = LoadTexture("Texture/Texture_JC.png");
     Texture_CWGitHubLink = LoadTexture("Texture/Texture_CWGitHubLink.png");
+    Texture_Banner = LoadTexture("Texture/Texture_Banner.png");
+	Texture_Clock = LoadTexture("Texture/Texture_Clock.png");
+    for (int i = 0; i < 45; i++) {
+        char filename[64];
+        snprintf(filename, sizeof(filename), "Texture/BV1EZ421u7NG%05d.jpg", i + 1);
+        AD[i] = LoadTexture(filename);
+        if (AD[i] == 0) {
+            std::cerr << GetCurrentTimeString() << " Failed to load texture: " << filename << std::endl;
+        }
+    }
 }
 
 static void DrawTexturedCube(const glm::vec3& center, float edgeLength, GLuint textureID) {
@@ -590,6 +670,55 @@ static void DrawTexturedPlane(const glm::vec3& center, float width, float height
     glEnd();
 
     glDisable(GL_TEXTURE_2D); // 禁用纹理映射
+}
+
+static void DrawTextureCircle(GLuint textureID, const glm::vec3& center, float radius, const glm::vec3& normal,
+    float startAngle, float endAngle, int slices, bool flipTexture = false, float rotateTexture = 0.0f) {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // 计算法向量的正交基
+    glm::vec3 n = glm::normalize(normal);
+    glm::vec3 up = (fabs(n.x) < 0.999f) ? glm::vec3(1.0f, 0.0f, 0.0f) : glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 tangent = glm::normalize(glm::cross(up, n));
+    glm::vec3 bitangent = glm::cross(n, tangent);
+
+    // 转换角度为弧度
+    float startRad = glm::radians(startAngle);
+    float endRad = glm::radians(endAngle);
+    float deltaAngle = (endRad - startRad) / slices;
+
+    // 纹理旋转角度（弧度）
+    float textureRotationRad = glm::radians(rotateTexture);
+
+    glBegin(GL_TRIANGLE_FAN);
+
+    glTexCoord2f(0.5f, 0.5f);
+    glVertex3f(center.x, center.y, center.z);
+
+    for (int i = 0; i <= slices; ++i) {
+        float currentAngle = startRad + i * deltaAngle;
+
+        glm::vec3 point = center + radius * (cos(currentAngle) * tangent + sin(currentAngle) * bitangent);
+
+        float u = cos(currentAngle);
+        float v = sin(currentAngle);
+
+        if (flipTexture) {
+            u = -u;
+            v = -v;
+        }
+
+        float rotatedU = 0.5f + 0.5f * (u * cos(textureRotationRad) - v * sin(textureRotationRad));
+        float rotatedV = 0.5f + 0.5f * (u * sin(textureRotationRad) + v * cos(textureRotationRad));
+
+        glTexCoord2f(rotatedU, rotatedV);
+        glVertex3f(point.x, point.y, point.z);
+    }
+
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -755,6 +884,40 @@ static void DrawCircle(const glm::vec4& color, const glm::vec3& center, float ra
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+static void DrawSphere(const glm::vec4& color, const glm::vec3& center, float radius, int slices = 360, int stacks = 400) { //slices:经度精细度，stacks:纬度精细度
+    glColor4f(color.r, color.g, color.b, color.a);
+
+    glBegin(GL_TRIANGLE_STRIP);
+
+    for (int stack = 0; stack < stacks; ++stack) {
+        // 当前stacks和下一stacks的纬度角（弧度）
+        float phi1 = glm::pi<float>() * (-0.5f + static_cast<float>(stack) / stacks);
+        float phi2 = glm::pi<float>() * (-0.5f + static_cast<float>(stack + 1) / stacks);
+
+        float z1 = radius * sin(phi1); // 当前stacks的 Z 坐标
+        float z2 = radius * sin(phi2); // 下一stacks的 Z 坐标
+
+        float r1 = radius * cos(phi1); // 当前stacks的水平半径
+        float r2 = radius * cos(phi2); // 下一stacks的水平半径
+
+        for (int slice = 0; slice <= slices; ++slice) {
+            float theta = 2.0f * glm::pi<float>() * static_cast<float>(slice) / slices;
+
+            float x = cos(theta);
+            float y = sin(theta);
+
+            glm::vec3 p1 = center + glm::vec3(r1 * x, r1 * y, z1);
+            glm::vec3 p2 = center + glm::vec3(r2 * x, r2 * y, z2);
+
+            glVertex3f(p1.x, p1.y, p1.z);
+            glVertex3f(p2.x, p2.y, p2.z);
+        }
+    }
+
+    glEnd();
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
 static void DrawPlane(const glm::vec4& color, const float width, const float height, const glm::vec3& center, const glm::vec3& normal) {
     glColor4f(color.x, color.y, color.z, color.a);
 
@@ -803,11 +966,11 @@ static void DrawCubeLWH(const glm::vec4& color, const float length, const float 
 
     // 正面（XY 平面）
     glm::vec3 frontCenter = glm::vec3(center.x, center.y, center.z + halfLength);
-    DrawPlane(color, width, height, frontCenter, Backward);
+    DrawPlane(color, height, width, frontCenter, Backward);
 
     // 背面（XY 平面）
     glm::vec3 backCenter = glm::vec3(center.x, center.y, center.z - halfLength);
-    DrawPlane(color, width, height, backCenter, Backward);
+    DrawPlane(color, height, width, backCenter, Backward);
 
     // 顶面（XZ 平面）
     glm::vec3 topCenter = glm::vec3(center.x, center.y + halfHeight, center.z);
@@ -5520,7 +5683,7 @@ static void DrawBuildings() {
     }
     // end QUALITY TEA
 
-    DrawPlane(TransHEXtoVec4WithAlpha(Color_Gray3), 20.0f, 40.0f, PlaneOrigin + glm::vec3(-30.0f, 50.0f, 60.0f), Rightward + Backward);
+    DrawTexturedPlane(PlaneOrigin + glm::vec3(-30.0f, 50.0f, 60.0f), 20.0f, 40.0f, Texture_AD, Leftward + Forward, false, true);
 
     // 141,LSS,JC
     {
@@ -5619,16 +5782,24 @@ static void DrawRoads() {
     //end双黄+停止线
 }
 
+static void DrawClock() {
+	DrawCylinder(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f), 25.0f, 5.0f, Leftward, 0.0f, 360.0f, 360);
+	DrawTextureCircle(Texture_Clock, PlaneOrigin + glm::vec3(117.5f, 30.0f, 0.0f), 25.0f, Rightward, 0.0f, 360.0f, 360, true, 0.0);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f), 25.0f, Leftward, 0.0f, 360.0f, 360);
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f), 0.5f, 5.0f, Leftward, 0.0f, 360.0f, 360); // 表柱
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Firefly), PlaneOrigin + glm::vec3(115.0f, 30.0f, 0.0f), 0.5f, Leftward, 0.0f, 360.0f, 360);
+}
+
 static void DrawAllStatic() {
     DrawPlane(TransHEXtoVec4WithAlpha(Color_Ground), 300.0f, 300.0f, PlaneOrigin, Upward); // 地板
     DrawFirefly();
     DrawRoads();
     DrawBuildings();
+    DrawClock();
 }
 
 
 
-AnimatedObject obj, GuardrailProps[8];
 static void DrawAniCubeObj() {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, obj.position); // 平移
@@ -5693,47 +5864,155 @@ static void DrawAniGuardrails() {
     }
 }
 
+static void DrawAniVehicle_Small() {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, Vehicle_S.position);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(&model[0][0]);
+
+    const float WheelRadius = 0.8f;
+    glm::vec3 S_Origin = PlaneOrigin + glm::vec3(30.0f, 1.0f + WheelRadius, 83.0f);
+    // Body 车身
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            DrawCube(TransHEXtoVec4WithAlpha(Color_PinkRed), 2.0f, S_Origin + glm::vec3(2.0f * j, 0.0f, 2.0f * i));
+        }
+    }
+    DrawCubeLWH(TransHEXtoVec4WithAlpha(Color_Brown), 4.0f, 6.0f, 2.0f, S_Origin + glm::vec3(3.0f, 2.0f, 2.0f));
+
+    // Wheel 轮子
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Black), S_Origin + glm::vec3(0.0f, -1.0f, 5.0f), WheelRadius, 0.2f, Backward, 0.0f, 360.0f, 360);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Gold1), S_Origin + glm::vec3(0.0f, -1.0f, 5.2f), WheelRadius, Backward, 0.0f, 360.0f, 360);
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Black), S_Origin + glm::vec3(6.0f, -1.0f, 5.0f), WheelRadius, 0.2f, Backward, 0.0f, 360.0f, 360);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Gold1), S_Origin + glm::vec3(6.0f, -1.0f, 5.2f), WheelRadius, Backward, 0.0f, 360.0f, 360);
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Black), S_Origin + glm::vec3(0.0f, -1.0f, -1.0f), WheelRadius, 0.2f, Forward, 0.0f, 360.0f, 360);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Gold1), S_Origin + glm::vec3(0.0f, -1.0f, -1.2f), WheelRadius, Forward, 0.0f, 360.0f, 360);
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Black), S_Origin + glm::vec3(6.0f, -1.0f, -1.0f), WheelRadius, 0.2f, Forward, 0.0f, 360.0f, 360);
+    DrawCircle(TransHEXtoVec4WithAlpha(Color_Gold1), S_Origin + glm::vec3(6.0f, -1.0f, -1.2f), WheelRadius, Forward, 0.0f, 360.0f, 360);
+
+    glPopMatrix();
+}
+
+static void DrawAniHand_H(const AnimatedObject& obj, const glm::vec3& rotationCenter) {
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, rotationCenter);
+    model = glm::rotate(model, glm::radians(obj.rotation.x), Rightward);
+    model = glm::translate(model, obj.position - rotationCenter);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(&model[0][0]);
+
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Gold1), PlaneOrigin + glm::vec3(117.0f, 30.0f, 0.0f), 0.2f, 10.0f, Upward, 0.0f, 360.0f, 360); // 时针Hour hand
+
+    glPopMatrix();
+}
+
+static void DrawAniHand_M(const AnimatedObject& obj, const glm::vec3& rotationCenter) {
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, rotationCenter);
+    model = glm::rotate(model, glm::radians(obj.rotation.x), Rightward);
+    model = glm::translate(model, obj.position - rotationCenter);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(&model[0][0]);
+
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_Gold), PlaneOrigin + glm::vec3(116.0f, 30.0f, 0.0f), 0.2f, 20.0f, Upward, 0.0f, 360.0f, 360); // 分针Minute hand
+
+    glPopMatrix();
+}
+
+static void DrawAniHand_S(const AnimatedObject& obj, const glm::vec3& rotationCenter) {
+    glm::mat4 model = glm::mat4(1.0f);
+
+    model = glm::translate(model, rotationCenter);
+    model = glm::rotate(model, glm::radians(obj.rotation.x), Rightward);
+    model = glm::translate(model, obj.position - rotationCenter);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(&model[0][0]);
+
+    DrawCylinder(TransHEXtoVec4WithAlpha(Color_PinkRed), PlaneOrigin + glm::vec3(115.5f, 30.0f, 0.0f), 0.1f, 20.0f, Upward, 0.0f, 360.0f, 360); // 秒针Second hand
+
+    glPopMatrix();
+}
+
+
 
 static void DrawAllAnimate() {
     DrawAniCubeObj();
     DrawAniGuardrails();
+    DrawAniVehicle_Small();
+    DrawAniHand_H(HHand, PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f));
+    DrawAniHand_M(MHand, PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f));
+    DrawAniHand_S(SHand, PlaneOrigin + glm::vec3(120.0f, 30.0f, 0.0f));
 }
 
 static void UpdateAnimation(float deltaTime) {
-    static float time = 0.0f;           // 时间累加器，用于周期性效果
-    static float rotationTimer = 0.0f; // 控制旋转间隔
-    static int currentStep = 0;        // 当前旋转步数
-    static bool isAnimating = false;  // 标志是否正在执行动画
-    static const float Slice = 180.0f; // 分片数，控制动画的平滑程度
+    static float time = 0.0f;               // 时间累加器，用于周期性效果
+    static const float Slice = 180.0f;      // 分片数，控制动画的平滑程度
+    static float ADtime = 0.0f;
+
+    ADtime += deltaTime;
+    if (ADtime >= 0.1f) {
+        Texture_AD = AD[CurrentADFrame];
+		CurrentADFrame = (CurrentADFrame + 1) % 44;
+        ADtime -= 0.1f;
+    }
 
     time += deltaTime;
-
-    // 使用正弦函数周期性地改变透明度 (0 ~ 1)
     obj.alpha = (sin(time * 2.0f) + 1.0f) / 2.0f;
 
-    // 如果正在动画中
-    if (isAnimating) {
-        if (currentStep < Slice) {
+
+    // 栏杆动画
+    if (guardrailState.isAnimating) {
+        if (guardrailState.currentStep < Slice) {
             for (int i = 0; i < 8; i++) {
                 float rotationDelta = GuardrailChangeArray[i].y / Slice; // 每帧旋转量
-                GuardrailProps[i].rotation.y += GuardrrailRotateFlag ? rotationDelta : -rotationDelta;
+                GuardrailProps[i].rotation.y += guardrailState.RotateFlag ? rotationDelta : -rotationDelta;
             }
-            currentStep++;
+            guardrailState.currentStep++;
         }
         else {
             // 动画完成，重置状态
-            isAnimating = false;
-            currentStep = 0;
-            GuardrrailRotateFlag = !GuardrrailRotateFlag; // 切换方向
+            guardrailState.isAnimating = false;
+            guardrailState.currentStep = 0;
+            guardrailState.RotateFlag = !guardrailState.RotateFlag; // 切换方向
         }
     }
     else {
-        rotationTimer += deltaTime;
-        if (rotationTimer >= 2.0f) {
-            isAnimating = true;
-            rotationTimer -= 2.0f;
+        guardrailState.rotationTimer += deltaTime;
+        if (guardrailState.rotationTimer >= 6.0f) {
+            guardrailState.isAnimating = true;
+            guardrailState.rotationTimer -= 6.0f;
         }
     }
+
+
+    // 车s
+    if (Vehicle_S.direction == Leftward && glm::length(Vehicle_S.position.x - 0.0f) <= 0.1f) { // 从右往左到达路口←
+        Vehicle_S.speed = guardrailState.RotateFlag ? 0.0f : 1.0f;
+    }
+    if (Vehicle_S.direction == Rightward && glm::length(Vehicle_S.position.x - -65.0f) <= 0.1f) { // 从左往右到达路口→
+        Vehicle_S.speed = guardrailState.RotateFlag ? 0.0f : 1.0f;
+    }
+    if (Vehicle_S.position.x <= -180.0f) { // 到达左侧边界
+        Vehicle_S.position += glm::vec3(0.0f, 0.0f, 10.0f);
+        Vehicle_S.direction = Rightward;
+    }
+    if (Vehicle_S.position.x >= 120.0f) { // 到达右侧边界
+        Vehicle_S.position += glm::vec3(0.0f, 0.0f, -10.0f);
+        Vehicle_S.direction = Leftward;
+    }
+    Vehicle_S.position += Vehicle_S.direction * Vehicle_S.speed * deltaTime * 10.0f; // 6s通过路口，乘个系数
+
+    GetClockHandAngles(HHand.rotation.x, MHand.rotation.x, SHand.rotation.x);
 }
 
 
