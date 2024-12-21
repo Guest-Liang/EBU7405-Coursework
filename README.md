@@ -1,6 +1,8 @@
 # EBU7405-Coursework
 `cw/includes`、`cw/src`、`cw/lib`均来自GitHub Repo: [LearnOpenGL](https://github.com/JoeyDeVries/LearnOpenGL)
 
+## 运行时由于加载纹理需要一定时间，Windows(24h2)下大约需要8秒，VMWare中Ubuntu25.04虚拟机大约需要10秒进行加载，所以请耐心等待
+
 # Ubuntu
 在Ubuntu下编译时，需要先[下载GLFW3.4源代码](https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.zip)手动编译一下Ubuntu系统所需的glfw库(.a文件)，说明文档[Compiling GLFW](https://www.glfw.org/docs/latest/compile.html)   
 或者可以直接用lib文件夹下我编译好的libglfw3.a文件   

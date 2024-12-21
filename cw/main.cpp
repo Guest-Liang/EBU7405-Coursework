@@ -15,6 +15,9 @@
 #include <chrono>
 #include <thread>
 
+// Texture header
+#include "Texture.h"
+
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE 0x809D
 #endif
@@ -229,6 +232,37 @@ static GLuint LoadTexture(const char* filepath) {
         std::cerr << GetCurrentTimeString() << " Failed to load texture: " << filepath << std::endl;
     }
     stbi_image_free(data); // 释放图片数据
+
+    return textureID;
+}
+
+static GLuint LoadTextureFromMemory(const unsigned char* data, unsigned int size) {
+    int width, height, channels;
+
+    // 使用 stbi_load_from_memory 加载图像数据
+    unsigned char* imageData = stbi_load_from_memory(data, size, &width, &height, &channels, 4);
+    if (!imageData) {
+        std::cerr << GetCurrentTimeString() << " Failed to load texture from memory: " << stbi_failure_reason() << std::endl;
+        return 0;
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // 上传图像数据到 OpenGL
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData); // 将图片上传为纹理数据
+    glGenerateMipmap(GL_TEXTURE_2D); // 自动生成所有需要的多级渐远纹理
+
+    // 设置纹理参数
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // 设置纹理在S方向上的重复方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); // 设置纹理在T方向上的重复方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // 缩小纹理时的过滤模式，使用线性插值和mipmap插值
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // 放大纹理时的过滤模式，线性插值
+
+    std::cout << GetCurrentTimeString() << " Texture loaded. " << " (" << width << "x" << height << "x" << channels << ")" << std::endl;
+
+    stbi_image_free(imageData); // 释放加载的图像数据
 
     return textureID;
 }
@@ -546,21 +580,19 @@ Texture_141, Texture_LSS, Texture_JC,
 Texture_CWGitHubLink, Texture_Banner, Texture_Clock,
 Texture_AD, AD[45];
 static void InitTextures() {
-    Texture_Fuxuan = LoadTexture("Texture/fuxuan.jpg");
-    Texture_LuminaSquare = LoadTexture("Texture/Texture_LuminaSquare.png");
-    Texture_QUALITYTEA = LoadTexture("Texture/Texture_QUALITYTEA.png");
-    Texture_141 = LoadTexture("Texture/Texture_141.png");
-    Texture_LSS = LoadTexture("Texture/Texture_LSS.png");
-    Texture_JC = LoadTexture("Texture/Texture_JC.png");
-    Texture_CWGitHubLink = LoadTexture("Texture/Texture_CWGitHubLink.png");
-    Texture_Banner = LoadTexture("Texture/Texture_Banner.png");
-	Texture_Clock = LoadTexture("Texture/Texture_Clock.png");
+    Texture_Fuxuan = LoadTextureFromMemory(fuxuan_jpg, fuxuan_jpg_len);
+    Texture_LuminaSquare = LoadTextureFromMemory(Texture_LuminaSquare_png, Texture_LuminaSquare_png_len);
+    Texture_QUALITYTEA = LoadTextureFromMemory(Texture_QUALITYTEA_png, Texture_QUALITYTEA_png_len);
+    Texture_141 = LoadTextureFromMemory(Texture_141_png, Texture_141_png_len);
+    Texture_LSS = LoadTextureFromMemory(Texture_LSS_png, Texture_LSS_png_len);
+    Texture_JC = LoadTextureFromMemory(Texture_JC_png, Texture_JC_png_len);
+    Texture_CWGitHubLink = LoadTextureFromMemory(Texture_CWGitHubLink_png, Texture_CWGitHubLink_png_len);
+    Texture_Banner = LoadTextureFromMemory(Texture_Banner_png, Texture_Banner_png_len);
+    Texture_Clock = LoadTextureFromMemory(Texture_Clock_png, Texture_Clock_png_len);
     for (int i = 0; i < 45; i++) {
-        char filename[64];
-        snprintf(filename, sizeof(filename), "Texture/BV1EZ421u7NG%05d.jpg", i + 1);
-        AD[i] = LoadTexture(filename);
+        AD[i] = LoadTextureFromMemory(BV1EZ421u7NG_data[i], BV1EZ421u7NG_data_len[i]);
         if (AD[i] == 0) {
-            std::cerr << GetCurrentTimeString() << " Failed to load texture: " << filename << std::endl;
+            std::cerr << GetCurrentTimeString() << " Failed to load texture from memory: AD[" << i << "]" << std::endl;
         }
     }
 }

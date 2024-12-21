@@ -164,6 +164,7 @@
     <ClCompile Include="src\glad.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Texture.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
